@@ -42,7 +42,7 @@ export async function GET(req: Request) {
       symbol: c.symbol.toLowerCase(),
       name: c.name,
     }));
-
+    console.log("search out as CoinGeckoSearchResponse", data);
     return NextResponse.json({ items: coins });
   }
 

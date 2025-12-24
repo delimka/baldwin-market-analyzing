@@ -1,4 +1,4 @@
-import type { Candle, MarketType } from "../types";
+import type { Candle, MarketType } from "@/entities/market/types";
 
 export type ProviderParams = {
   type: MarketType;

@@ -24,7 +24,7 @@ export async function POST(req: Request) {
     const provider = pickProvider(body);
 
     const candles: Candle[] = await provider.fetchCandles(body);
-
+    console.log("get advice candles", candles);
     if (candles.length < 60) {
       return NextResponse.json(
         { error: "Not enough data, at least 60 points are required" },

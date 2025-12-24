@@ -32,7 +32,7 @@ export async function GET(req: Request) {
       source: provider.name,
       candles,
     };
-
+    console.log("candles out", out);
     return NextResponse.json(out);
   } catch (e: unknown) {
     if (e instanceof Error) {

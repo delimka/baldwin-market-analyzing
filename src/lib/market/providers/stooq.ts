@@ -28,7 +28,7 @@ export const StooqProvider: MarketProvider = {
     //     Volume: "11223344"
     // },
     const rows = parsed.data;
-
+    console.log("stooq rows", rows);
     return rows
       .map((r) => ({
         t: new Date(r.Date).getTime(),

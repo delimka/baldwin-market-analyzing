@@ -36,6 +36,7 @@ export const CoinGeckoProvider: MarketProvider = {
     if (!res.ok) throw new Error("CoinGecko: error market_chart");
     const data = await res.json();
 
+    console.log("coingecko data", data);
     const prices: [number, number][] = data?.prices ?? [];
     return prices.map(([t, close]) => ({ t, close }));
   },

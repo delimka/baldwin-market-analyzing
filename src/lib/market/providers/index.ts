@@ -4,8 +4,9 @@ import { StooqProvider } from "./stooq";
 import { BinanceProvider } from "./binance";
 
 const providers: MarketProvider[] = [
-  BinanceProvider,
   CoinGeckoProvider,
+  BinanceProvider,
+
   StooqProvider,
 ];
 

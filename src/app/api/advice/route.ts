@@ -7,7 +7,7 @@ import { AdviceSchema } from "@/lib/openai/schemas/adviceSchema";
 import { computeIndicators } from "@/lib/indicators";
 
 import { pickProvider } from "@/lib/market/providers";
-import type { Candle } from "@/lib/market/types";
+import { Candle } from "@/entities/market/types";
 
 const BodySchema = z.object({
   type: z.enum(["stock", "crypto"]),
@@ -46,19 +46,19 @@ export async function POST(req: Request) {
     };
 
     const system = `
-You are a market analyst. Provide an educational "signal" (not financial advice).
-No guarantees of profitability. Always mention risks and uncertainty.
-If data is insufficient or noisy, prefer WATCH/HOLD.
-Output strictly in the given JSON schema.
-`;
+        You are a market analyst. Provide an educational "signal" (not financial advice).
+            No guarantees of profitability. Always mention risks and uncertainty.
+            If data is insufficient or noisy, prefer WATCH/HOLD.
+            Output strictly in the given JSON schema.
+            `;
 
     const user = `
-Asset: ${body.symbol} (${body.type}), currency: ${body.currency}, timeframe: ${
-      body.timeframe
-    }
-Data snapshot (latest values + indicators):
-${JSON.stringify(marketSnapshot, null, 2)}
-`;
+            Asset: ${body.symbol} (${body.type}), currency: ${
+      body.currency
+    }, timeframe: ${body.timeframe}
+            Data snapshot (latest values + indicators):
+            ${JSON.stringify(marketSnapshot, null, 2)}
+            `;
 
     const response = await openai.responses.parse({
       model: "gpt-5-mini",

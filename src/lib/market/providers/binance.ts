@@ -1,5 +1,5 @@
-import type { Candle } from "../types";
-import { BinanceKlinesSchema } from "../types";
+import type { Candle } from "@/entities/market/types";
+import { BinanceKlinesSchema } from "@/entities/market/types";
 import type { MarketProvider, ProviderParams } from "./base";
 
 function toBinanceSymbol(symbol: string) {
@@ -32,6 +32,8 @@ export const BinanceProvider: MarketProvider = {
     if (!res.ok) throw new Error("Binance: error klines");
     const raw = await res.json();
     const data = BinanceKlinesSchema.parse(raw);
+
+    console.log("binance data", data);
 
     return data
       .map(

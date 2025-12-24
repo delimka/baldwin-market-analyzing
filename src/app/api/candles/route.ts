@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { pickProvider } from "@/lib/market/providers";
-import type { CandlesResponse } from "@/lib/market/types";
+import type { CandlesResponse } from "@/entities/market/types";
 
 const Q = z.object({
   type: z.enum(["stock", "crypto"]),

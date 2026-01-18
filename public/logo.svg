@@ -1,0 +1,60 @@
+<svg width="240" height="80" viewBox="0 0 240 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g" x1="8" y1="8" x2="72" y2="72" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0e3a3a"/>
+      <stop offset="1" stop-color="#0f766e"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="18" y1="18" x2="68" y2="62" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1fb7ae"/>
+      <stop offset="1" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="6" y="6" width="68" height="68" rx="18" fill="url(#g)"/>
+  <rect x="14" y="14" width="52" height="52" rx="14" stroke="url(#g2)" stroke-width="2"/>
+  <path
+    d="M22 50 L32 38 L42 46 L52 34 L62 42"
+    stroke="white"
+    stroke-width="4"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <circle cx="62" cy="42" r="3.5" fill="white"/>
+  <circle cx="22" cy="50" r="3.5" fill="white"/>
+  <path
+    d="M24 24 L24 56 L34 56 C41 56 46 52 46 46 C46 40 42 36 36 36 L24 36"
+    stroke="white"
+    stroke-width="3"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    opacity="0.8"
+  />
+  <path
+    d="M50 24 L54 46 L58 34 L62 46 L66 24"
+    stroke="white"
+    stroke-width="3"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    opacity="0.8"
+  />
+
+  <text
+    x="90"
+    y="50"
+    font-family="Fraunces, Iowan Old Style, Palatino Linotype, serif"
+    font-size="32"
+    font-weight="600"
+    fill="#1b262a"
+    letter-spacing="0.6"
+  >
+    BaldWin
+  </text>
+  <path
+    d="M90 56 L178 56"
+    stroke="#0f766e"
+    stroke-width="2.4"
+    stroke-linecap="round"
+    opacity="0.85"
+  />
+  <circle cx="182" cy="56" r="2.4" fill="#f59e0b"/>
+</svg>

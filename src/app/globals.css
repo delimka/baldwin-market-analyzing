@@ -2,18 +2,71 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --border: 214.3 31.8% 91.4%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --radius: 0.75rem;
+    --background: 36 30% 97%;
+    --foreground: 222 25% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 25% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 25% 12%;
+    --primary: 183 70% 28%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 40 36% 92%;
+    --secondary-foreground: 222 25% 18%;
+    --muted: 32 30% 94%;
+    --muted-foreground: 215 15% 42%;
+    --accent: 190 30% 92%;
+    --accent-foreground: 222 25% 18%;
+    --destructive: 0 74% 50%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 210 20% 88%;
+    --input: 210 20% 88%;
+    --ring: 183 70% 28%;
+    --radius: 1rem;
   }
 
   body {
     background: hsl(var(--background));
     color: hsl(var(--foreground));
+  }
+}
+
+@layer utilities {
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes float-slow {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-12px);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .animate-fade-up {
+      animation: fade-up 700ms ease-out both;
+    }
+
+    .animate-fade-up-delay-2 {
+      animation-delay: 140ms;
+    }
+
+    .animate-float-slow {
+      animation: float-slow 12s ease-in-out infinite;
+    }
+
+    .animate-float-slower {
+      animation: float-slow 16s ease-in-out infinite;
+    }
   }
 }

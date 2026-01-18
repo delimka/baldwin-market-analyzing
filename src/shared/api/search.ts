@@ -1,5 +1,5 @@
 import { fetchJson } from "./http";
-import type { MarketType } from "@/entities/market/types";
+import type { MarketType } from "@/entities/market/model/types";
 
 export type SearchItem = { id?: string; symbol: string; name?: string };
 export type SearchResponse = { items: SearchItem[] };

@@ -1,7 +1,7 @@
 import { fetchJson } from "./http";
-import type { CandlesResponse, MarketType } from "@/entities/market/types";
+import type { CandlesResponse, MarketType } from "@/entities/market/model/types";
 
-export type TF = "1D" | "1H";
+export type TF = "1D" | "1H" | "1W" | "1M";
 
 export function getCandles(params: {
   type: MarketType;

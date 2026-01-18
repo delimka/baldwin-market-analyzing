@@ -1,6 +1,6 @@
 import { fetchJson } from "./http";
-import type { Advice } from "@/lib/openai/schemas/adviceSchema";
-import type { MarketType } from "@/entities/market/types";
+import type { Advice } from "@/entities/advice/model/adviceSchema";
+import type { MarketType } from "@/entities/market/model/types";
 import type { TF } from "./market";
 
 export type AdviceRequest = {
@@ -9,6 +9,7 @@ export type AdviceRequest = {
   currency?: string;
   days?: number;
   timeframe: TF;
+  lang: string;
 };
 
 export function getAdvice(payload: AdviceRequest) {
@@ -19,6 +20,7 @@ export function getAdvice(payload: AdviceRequest) {
       ...payload,
       currency: payload.currency ?? "usd",
       days: payload.days ?? 60,
+      lang: payload.lang ?? "eng",
     }),
   });
 }

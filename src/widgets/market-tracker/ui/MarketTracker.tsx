@@ -20,6 +20,7 @@ import { AdviceCard } from "@/features/advice/ui/AdviceCard";
 
 import { useAdvice } from "@/features/advice/model/useAdvice";
 import { useCandles } from "@/features/market/model/useCandles";
+import { HeroBackground } from "@/widgets/main-page/ui/HeroBackground";
 
 export function MarketTracker() {
   const [type, setType] = useState<MarketType>("crypto");
@@ -34,8 +35,8 @@ export function MarketTracker() {
   const src = candlesQ.data?.source;
 
   return (
-    <main className="max-w-5xl mx-auto p-6 space-y-4">
-      <Card className="rounded-2xl">
+    <div>
+      <Card className="bg-white rounded-2xl">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             Market Tracker <Badge variant="secondary">MVP+</Badge>
@@ -97,6 +98,6 @@ export function MarketTracker() {
           />
         </CardContent>
       </Card>
-    </main>
+    </div>
   );
 }

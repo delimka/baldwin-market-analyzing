@@ -1,1 +1,1 @@
-export { MainPage } from "@/widgets/main-page/ui/MainPage";
+export { MainPage } from "@/widgets/main-page/MainPage";

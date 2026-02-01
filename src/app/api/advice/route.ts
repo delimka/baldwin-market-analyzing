@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { z, ZodError } from "zod";
 import { zodTextFormat } from "openai/helpers/zod";
 
-import { openai } from "@/shared/lib/openai/openai";
+import { openai } from "@/entities/market/api/providers/openai";
 import { AdviceSchema } from "@/entities/advice/model/adviceSchema";
 import { computeIndicators } from "@/entities/market/lib/indicators";
 import { pickProvider } from "@/entities/market/api/providers";

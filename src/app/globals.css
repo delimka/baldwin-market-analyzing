@@ -2,25 +2,25 @@
 
 @layer base {
   :root {
-    --background: 36 30% 97%;
-    --foreground: 222 25% 12%;
+    --background: 206 28% 97%;
+    --foreground: 215 22% 12%;
     --card: 0 0% 100%;
-    --card-foreground: 222 25% 12%;
+    --card-foreground: 215 22% 12%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222 25% 12%;
-    --primary: 183 70% 28%;
+    --popover-foreground: 215 22% 12%;
+    --primary: 145 62% 36%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 40 36% 92%;
-    --secondary-foreground: 222 25% 18%;
-    --muted: 32 30% 94%;
-    --muted-foreground: 215 15% 42%;
-    --accent: 190 30% 92%;
-    --accent-foreground: 222 25% 18%;
-    --destructive: 0 74% 50%;
+    --secondary: 204 24% 90%;
+    --secondary-foreground: 215 22% 18%;
+    --muted: 206 20% 92%;
+    --muted-foreground: 215 14% 42%;
+    --accent: 145 30% 88%;
+    --accent-foreground: 215 22% 18%;
+    --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 98%;
-    --border: 210 20% 88%;
-    --input: 210 20% 88%;
-    --ring: 183 70% 28%;
+    --border: 210 18% 86%;
+    --input: 210 18% 86%;
+    --ring: 145 62% 36%;
     --radius: 1rem;
   }
 
@@ -30,43 +30,67 @@
   }
 }
 
+@layer components {
+  .btn-primary {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    box-shadow: 0 6px 18px hsl(var(--primary) / 0.18);
+  }
+
+  .btn-primary:hover {
+    background: hsl(var(--primary) / 0.9);
+  }
+
+  .btn-secondary {
+    background: hsl(var(--secondary));
+    color: hsl(var(--secondary-foreground));
+    box-shadow: 0 6px 18px hsl(var(--foreground) / 0.08);
+  }
+
+  .btn-secondary:hover {
+    background: hsl(var(--secondary) / 0.85);
+  }
+
+  .btn-outline {
+    border: 1px solid hsl(var(--border));
+    color: hsl(var(--foreground));
+    background: transparent;
+  }
+
+  .btn-outline:hover {
+    background: hsl(var(--accent));
+  }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
 @layer utilities {
+ @media (prefers-reduced-motion: no-preference) {
+    .marquee {
+      display: flex;
+      width: max-content;
+      animation: marquee-track 30s linear infinite;
+      will-change: transform;
+    }
+  }
+
   @keyframes fade-up {
-    from {
-      opacity: 0;
-      transform: translateY(12px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   @keyframes float-slow {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-12px);
-    }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .animate-fade-up {
-      animation: fade-up 700ms ease-out both;
-    }
-
-    .animate-fade-up-delay-2 {
-      animation-delay: 140ms;
-    }
-
-    .animate-float-slow {
-      animation: float-slow 12s ease-in-out infinite;
-    }
-
-    .animate-float-slower {
-      animation: float-slow 16s ease-in-out infinite;
-    }
+    .animate-fade-up { animation: fade-up 700ms ease-out both; }
+    .animate-fade-up-delay-2 { animation-delay: 140ms; }
+    .animate-float-slow { animation: float-slow 12s ease-in-out infinite; }
+    .animate-float-slower { animation: float-slow 16s ease-in-out infinite; }
   }
 }

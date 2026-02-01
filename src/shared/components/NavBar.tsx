@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ComponentPropsWithoutRef } from "react";
 import { Menu, X } from "lucide-react";
 import { useIsMobile } from "@/shared/hooks/useMobile";
-import { Badge } from "@/shared/ui/shadcn/badge";
 import { Button } from "@/shared/ui/shadcn/button";
+import { LanguageSwitcher } from "@/shared/components/LanguageSwitcher";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -45,39 +45,68 @@ const companyLinks = [
 export function NavBar() {
   const isMobile = useIsMobile();
   const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (open) {
+            lastScrollY.current = window.scrollY;
+            ticking = false;
+            return;
+          }
+
+          const currentY = window.scrollY;
+          const scrollingDown = currentY > lastScrollY.current;
+          const pastThreshold = currentY > 100;
+
+          setHidden(scrollingDown && pastThreshold);
+          lastScrollY.current = currentY;
+
+          ticking = false;
+        });
+
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [open]);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-4">
+    <header
+      className={[
+        "sticky top-0 z-40 w-full border-b bg-[hsl(var(--background))] text-[hsl(var(--foreground))]",
+        open ? "translate-y-0" : "transition-transform duration-300",
+        hidden ? "-translate-y-full" : "translate-y-0",
+      ].join(" ")}
+    >
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between = gap-6 px-4">
         <Link href="/" className="flex items-center gap-3">
           <Image
-            src="/logo.svg"
+            src="/logo.webp"
             alt="BaldWin logo"
             width={140}
             height={32}
-            className="h-8 w-auto"
+            className="h-14 w-auto"
             priority
           />
-          <div className="flex flex-col leading-tight">
-            <span className="text-sm font-semibold tracking-wide">BaldWin</span>
-            <span className="text-[11px] text-muted-foreground">
-              Market Analyzer
-            </span>
-          </div>
-          <Badge variant="secondary" className="hidden sm:inline-flex">
+          {/* <Badge variant="secondary" className="hidden sm:inline-flex">
             AI
-          </Badge>
+          </Badge> */}
         </Link>
 
-        <NavigationMenu
-          viewport={!isMobile}
-          className="hidden max-w-none md:flex"
-        >
+        <NavigationMenu viewport={false} className="hidden max-w-none md:flex ">
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuTrigger>Product</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid gap-2 p-2 md:w-[360px]">
+              <NavigationMenuContent className="bg-[hsl(var(--background))] text-[hsl(var(--foreground))] shadow-lg">
+                <ul className="grid gap-2 p-2 md:w-90">
                   {productLinks.map((item) => (
                     <ListItem
                       key={item.title}
@@ -92,13 +121,13 @@ export function NavBar() {
             </NavigationMenuItem>
             <NavigationMenuItem>
               <NavigationMenuTrigger>Company</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-[220px] gap-2 p-2">
+              <NavigationMenuContent className="bg-[hsl(var(--background))] text-[hsl(var(--foreground))] shadow-lg">
+                <ul className="grid w-55 gap-2 p-2">
                   {companyLinks.map((item) => (
                     <NavigationMenuLink
                       key={item.title}
                       asChild
-                      className="rounded-md px-3 py-2 text-sm hover:bg-accent"
+                      className="rounded-md px-3 py-2 text-sm"
                     >
                       <Link href={item.href}>{item.title}</Link>
                     </NavigationMenuLink>
@@ -117,11 +146,16 @@ export function NavBar() {
           </NavigationMenuList>
         </NavigationMenu>
 
-        <div className="hidden items-center gap-2 md:flex">
-          <Button variant="ghost" asChild>
-            <Link href="/market-screener">Try screener</Link>
+        <div className="hidden items-center gap-3 md:flex">
+          <LanguageSwitcher />
+          <Button
+            variant="outline"
+            className="border-border/60 bg-card/80 shadow-sm backdrop-blur hover:bg-card"
+            asChild
+          >
+            <Link href="/login">Log in</Link>
           </Button>
-          <Button asChild>
+          <Button className="btn-primary shadow-sm" asChild>
             <Link href="/market-tracker">Open tracker</Link>
           </Button>
         </div>
@@ -131,7 +165,11 @@ export function NavBar() {
             variant="ghost"
             size="icon"
             aria-label="Toggle menu"
-            onClick={() => setOpen((v) => !v)}
+            onClick={() => {
+              setHidden(false);
+              lastScrollY.current = window.scrollY;
+              setOpen((v) => !v);
+            }}
           >
             {open ? <X /> : <Menu />}
           </Button>
@@ -142,7 +180,7 @@ export function NavBar() {
         className={[
           "overflow-hidden border-t bg-background/95 transition-all duration-300 ease-out md:hidden",
           open
-            ? "max-h-[520px] opacity-100 translate-y-0 blur-0"
+            ? "max-h-130 opacity-100 translate-y-0 blur-0"
             : "pointer-events-none max-h-0 opacity-0 -translate-y-2 blur-sm",
         ].join(" ")}
         aria-hidden={!open}
@@ -210,7 +248,7 @@ function ListItem({
   return (
     <li {...props}>
       <NavigationMenuLink asChild>
-        <Link href={href} className="rounded-md px-3 py-2 hover:bg-accent">
+        <Link href={href} className="rounded-md px-3 py-2 ">
           <div className="text-sm font-medium">{title}</div>
           <p className="text-sm text-muted-foreground">{children}</p>
         </Link>

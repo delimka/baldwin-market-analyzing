@@ -2,6 +2,7 @@
 
 import type { MarketType } from "@/entities/market/model/types";
 import type { TF } from "@/shared/api/market";
+import { LanguageSwitcher } from "@/shared/components/LanguageSwitcher";
 import {
   Select,
   SelectContent,
@@ -46,16 +47,15 @@ export function MarketControls(props: {
         </SelectContent>
       </Select>
 
-      <Select value={props.lang} onValueChange={props.onLangChange}>
-        <SelectTrigger className="w-28">
-          <SelectValue placeholder="lang" />
-        </SelectTrigger>
-        <SelectContent className="bg-white w-28">
-          <SelectItem value="rus">RUS</SelectItem>
-          <SelectItem value="eng">ENG</SelectItem>
-          <SelectItem value="fin">FIN</SelectItem>
-        </SelectContent>
-      </Select>
+      <LanguageSwitcher
+        value={props.lang}
+        onChange={(value) => props.onLangChange?.(value)}
+        options={[
+          { code: "eng", label: "EN" },
+          { code: "rus", label: "RU" },
+          { code: "fin", label: "FIN" },
+        ]}
+      />
     </>
   );
 }

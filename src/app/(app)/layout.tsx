@@ -1,5 +1,6 @@
 import "@/app/globals.css";
 import { Providers } from "@/app/providers/react-query";
+import MainLayot from "@/app/layouts/MainLayout";
 
 export default function RootLayout({
   children,
@@ -7,9 +8,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ru">
+    <html lang="eng">
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <MainLayot>{children}</MainLayot>
+        </Providers>
       </body>
     </html>
   );

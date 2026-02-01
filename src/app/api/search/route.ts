@@ -7,7 +7,7 @@ const Q = z.object({
 });
 
 type CoinGeckoSearchResponse = {
-  coins?: Array<{
+    coins?: Array<{
     id: string;
     symbol: string;
     name: string;

@@ -1,3 +1,3 @@
-﻿export { pricingData } from "./pricingData";
+export { pricingData } from "./pricingData";
 export { faqsData } from "./faqsData";
-export { companiesLogo } from "./companiesLogo";
+export { useCryptoLogos } from "./useCryptoLogos";

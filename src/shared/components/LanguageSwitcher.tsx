@@ -3,11 +3,7 @@
 import { useEffect, useState } from "react";
 import { ChevronDown, Globe } from "lucide-react";
 import { Button } from "@/shared/ui";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/shared/ui";
+import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui";
 
 type LanguageOption = {
   code: string;
@@ -54,7 +50,7 @@ export function LanguageSwitcher({
       </PopoverTrigger>
       <PopoverContent
         align="end"
-        className="w-28 border border-border/70 bg-card p-2 text-[hsl(var(--foreground))] shadow-lg "
+        className="w-28 border border-border/70 bg-card p-2 text-[hsl(var(--foreground))] shadow-lg bg-[hsl(var(--background))]"
       >
         <div className="grid gap-1">
           {options.map((language) => (
@@ -81,4 +77,3 @@ export function LanguageSwitcher({
     </Popover>
   );
 }
-

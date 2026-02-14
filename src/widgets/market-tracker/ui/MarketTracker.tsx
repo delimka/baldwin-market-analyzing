@@ -1,11 +1,6 @@
 ﻿"use client";
 import { useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/shared/ui";
+import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui";
 import { Badge } from "@/shared/ui";
 import { Button } from "@/shared/ui";
 import { Separator } from "@/shared/ui";
@@ -36,7 +31,7 @@ export function MarketTracker() {
 
   return (
     <div>
-      <Card className="bg-white rounded-2xl">
+      <Card className="rounded-2xl">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             Market Tracker <Badge variant="secondary">MVP+</Badge>
@@ -101,6 +96,3 @@ export function MarketTracker() {
     </div>
   );
 }
-
-
-

@@ -28,7 +28,7 @@ export function ScreenerTable({ items }: { items: ScreenerItem[] }) {
                 {it.newsCount} ({it.newsSentiment.toFixed(2)})
               </td>
               <td className="p-2 text-right">{it.score.toFixed(3)}</td>
-              <td className="p-2 opacity-80">{it.reasons.join(" Â· ")}</td>
+              <td className="p-2 opacity-80">{it.reasons.join(" | ")}</td>
             </tr>
           ))}
         </tbody>

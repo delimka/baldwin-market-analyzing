@@ -30,7 +30,7 @@ export function LoginDialog() {
             <Input
               id="login-password"
               type="password"
-              placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
+              placeholder="********"
             />
           </div>
           <Button className="btn-primary">Continue</Button>

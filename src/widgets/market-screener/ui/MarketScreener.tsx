@@ -62,7 +62,7 @@ export function MarketScreener() {
         <div className="text-xs opacity-60">
           {q.data?.asOf
             ? `asOf: ${new Date(q.data.asOf).toLocaleString()}`
-            : "â€”"}
+            : "-"}
         </div>
       </CardHeader>
 

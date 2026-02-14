@@ -76,13 +76,13 @@ export function MarketTracker() {
           </div>
 
           <div className="text-sm opacity-70">
-            Data source: <span className="font-medium">{src ?? "â€”"}</span>
+            Data source: <span className="font-medium">{src ?? "-"}</span>
           </div>
 
           <Separator />
 
           {candlesQ.isLoading ? (
-            <div>Loading candlesâ€¦</div>
+            <div>Loading candles...</div>
           ) : candlesQ.isError ? (
             <div className="text-red-600">Error: {candlesQ.error.message}</div>
           ) : (

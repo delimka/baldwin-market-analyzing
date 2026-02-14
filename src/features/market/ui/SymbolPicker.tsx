@@ -66,7 +66,7 @@ function SymbolPickerInner({ type, value, onApply }: Props) {
   const helperText = React.useMemo(() => {
     if (type !== "crypto") return null;
     if (q.length < 2) return "Type at least 2 characters";
-    if (searchQ.isFetching) return "Searchingâ€¦";
+    if (searchQ.isFetching) return "Searching...";
     if (enabled && !items.length) return "No matches";
     return null;
   }, [type, q.length, enabled, searchQ.isFetching, items.length]);
@@ -132,7 +132,7 @@ function SymbolPickerInner({ type, value, onApply }: Props) {
                         <div className="truncate">
                           <span className="font-medium">{it.symbol}</span>
                           {it.name ? (
-                            <span className="opacity-70"> â€” {it.name}</span>
+                            <span className="opacity-70"> - {it.name}</span>
                           ) : null}
                         </div>
                       </div>

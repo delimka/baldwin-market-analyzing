@@ -1,12 +1,7 @@
 ﻿"use client";
 
 import { useMemo, useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/shared/ui";
+import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui";
 import { Badge } from "@/shared/ui";
 import { Separator } from "@/shared/ui";
 import type { Advice } from "@/entities/advice";
@@ -60,7 +55,7 @@ export function AdviceCard(props: {
     if (!data) return 0;
     return Math.max(
       0,
-      Math.min(100, Math.round(data.recommendation.confidence * 100))
+      Math.min(100, Math.round(data.recommendation.confidence * 100)),
     );
   }, [data]);
 
@@ -76,7 +71,7 @@ export function AdviceCard(props: {
               Model signal
               {data ? (
                 <Badge variant="secondary" className="font-normal">
-                  {data.asset.type.toUpperCase()} Â· {data.timeframe}
+                  {data.asset.type.toUpperCase()}· {data.timeframe}
                 </Badge>
               ) : null}
             </CardTitle>
@@ -86,8 +81,8 @@ export function AdviceCard(props: {
                 <span className="font-medium opacity-90">
                   {data.asset.symbol.toUpperCase()}
                 </span>
-                <span>Â· {data.asset.currency.toUpperCase()}</span>
-                <span className="opacity-60">Â·</span>
+                <span>· {data.asset.currency.toUpperCase()}</span>
+                <span className="opacity-60"></span>
                 <span className="opacity-80">Source: {data.asset.source}</span>
               </div>
             ) : (
@@ -195,7 +190,7 @@ export function AdviceCard(props: {
                     .slice(0, showDetails ? 999 : 3)
                     .map((b, i) => (
                       <li key={i} className="leading-relaxed">
-                        â€¢ {b}
+                        {b}
                       </li>
                     ))}
                 </ul>
@@ -213,7 +208,7 @@ export function AdviceCard(props: {
                     .slice(0, showDetails ? 999 : 3)
                     .map((b, i) => (
                       <li key={i} className="leading-relaxed">
-                        â€¢ {b}
+                        {b}
                       </li>
                     ))}
                 </ul>
@@ -231,7 +226,7 @@ export function AdviceCard(props: {
                     .slice(0, showDetails ? 999 : 3)
                     .map((r, i) => (
                       <li key={i} className="leading-relaxed">
-                        â€¢ {r}
+                        {r}
                       </li>
                     ))}
                 </ul>
@@ -247,7 +242,7 @@ export function AdviceCard(props: {
                     .slice(0, showDetails ? 999 : 4)
                     .map((n, i) => (
                       <li key={i} className="leading-relaxed">
-                        â€¢ {n}
+                        {n}
                       </li>
                     ))}
                 </ul>
@@ -272,14 +267,13 @@ export function AdviceCard(props: {
         ) : (
           <div className="opacity-70">
             {pending
-              ? "Thinkingâ€¦"
+              ? "Thinking¦"
               : error
-              ? "Fix the error above and try again."
-              : "Use risk management ðŸ™‚"}
+                ? "Fix the error above and try again."
+                : "Use risk management,"}
           </div>
         )}
       </CardContent>
     </Card>
   );
 }
-

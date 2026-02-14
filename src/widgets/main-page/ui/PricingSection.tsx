@@ -1,5 +1,5 @@
-import SectionTitle from "@/shared/components/SectionTitle";
-import { pricingData } from "@/shared/data/pricingData";
+﻿import { SectionTitle } from "@/shared/components";
+import { pricingData } from "../model";
 import { SparklesIcon } from "lucide-react";
 
 export function PricingSection() {
@@ -88,3 +88,7 @@ export function PricingSection() {
     </section>
   );
 }
+
+
+
+

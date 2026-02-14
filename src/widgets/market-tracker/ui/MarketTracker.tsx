@@ -1,26 +1,26 @@
-"use client";
+﻿"use client";
 import { useState } from "react";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/shared/ui/shadcn/card";
-import { Badge } from "@/shared/ui/shadcn/badge";
-import { Button } from "@/shared/ui/shadcn/button";
-import { Separator } from "@/shared/ui/shadcn/separator";
+} from "@/shared/ui";
+import { Badge } from "@/shared/ui";
+import { Button } from "@/shared/ui";
+import { Separator } from "@/shared/ui";
 
-import type { MarketType } from "@/entities/market/model/types";
-import type { TF } from "@/shared/api/market";
+import type { MarketType } from "@/entities/market";
+import type { TF } from "@/entities/market";
 
-import { MarketControls } from "@/features/market/ui/MarketControls";
-import { SymbolPicker } from "@/features/market/ui/SymbolPicker";
-import { PriceChart } from "@/entities/market/ui/PriceChart";
-import { AdviceCard } from "@/features/advice/ui/AdviceCard";
+import { MarketControls } from "@/features/market";
+import { SymbolPicker } from "@/features/market";
+import { PriceChart } from "@/entities/market";
+import { AdviceCard } from "@/features/advice";
 
-import { useAdvice } from "@/features/advice/model/useAdvice";
-import { useCandles } from "@/features/market/model/useCandles";
-import { HeroBackground } from "@/widgets/main-page/ui/HeroBackground";
+import { useAdvice } from "@/features/advice";
+import { useCandles } from "@/features/market";
+import { HeroBackground } from "@/shared/components";
 
 export function MarketTracker() {
   const [type, setType] = useState<MarketType>("crypto");
@@ -76,13 +76,13 @@ export function MarketTracker() {
           </div>
 
           <div className="text-sm opacity-70">
-            Data source: <span className="font-medium">{src ?? "—"}</span>
+            Data source: <span className="font-medium">{src ?? "â€”"}</span>
           </div>
 
           <Separator />
 
           {candlesQ.isLoading ? (
-            <div>Loading candles…</div>
+            <div>Loading candlesâ€¦</div>
           ) : candlesQ.isError ? (
             <div className="text-red-600">Error: {candlesQ.error.message}</div>
           ) : (
@@ -101,3 +101,6 @@ export function MarketTracker() {
     </div>
   );
 }
+
+
+

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useMemo, useState } from "react";
 import {
@@ -6,10 +6,10 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/shared/ui/shadcn/card";
-import { Badge } from "@/shared/ui/shadcn/badge";
-import { Separator } from "@/shared/ui/shadcn/separator";
-import type { Advice } from "@/entities/advice/model/adviceSchema";
+} from "@/shared/ui";
+import { Badge } from "@/shared/ui";
+import { Separator } from "@/shared/ui";
+import type { Advice } from "@/entities/advice";
 
 type Action = Advice["recommendation"]["action"];
 
@@ -28,7 +28,7 @@ function actionStyles(action: Action) {
 }
 
 function fmtNum(x: number | null) {
-  if (x === null) return "—";
+  if (x === null) return "â€”";
 
   const abs = Math.abs(x);
   if (abs >= 1000) return x.toFixed(0);
@@ -76,7 +76,7 @@ export function AdviceCard(props: {
               Model signal
               {data ? (
                 <Badge variant="secondary" className="font-normal">
-                  {data.asset.type.toUpperCase()} · {data.timeframe}
+                  {data.asset.type.toUpperCase()} Â· {data.timeframe}
                 </Badge>
               ) : null}
             </CardTitle>
@@ -86,8 +86,8 @@ export function AdviceCard(props: {
                 <span className="font-medium opacity-90">
                   {data.asset.symbol.toUpperCase()}
                 </span>
-                <span>· {data.asset.currency.toUpperCase()}</span>
-                <span className="opacity-60">·</span>
+                <span>Â· {data.asset.currency.toUpperCase()}</span>
+                <span className="opacity-60">Â·</span>
                 <span className="opacity-80">Source: {data.asset.source}</span>
               </div>
             ) : (
@@ -115,7 +115,7 @@ export function AdviceCard(props: {
 
         {/* status row */}
         {pending ? (
-          <div className="text-sm opacity-80">Thinking…</div>
+          <div className="text-sm opacity-80">Thinkingâ€¦</div>
         ) : error ? (
           <div className="text-sm text-red-600">{error}</div>
         ) : data ? (
@@ -162,7 +162,7 @@ export function AdviceCard(props: {
               <div className="text-xs opacity-70">Risk</div>
               <div className="mt-1 flex items-center justify-between gap-2">
                 <div className="text-lg font-semibold">
-                  ≤ {data.risk_management.max_risk_pct}%
+                  â‰¤ {data.risk_management.max_risk_pct}%
                 </div>
                 <Badge variant="secondary" className="text-xs">
                   Risk mgmt
@@ -195,7 +195,7 @@ export function AdviceCard(props: {
                     .slice(0, showDetails ? 999 : 3)
                     .map((b, i) => (
                       <li key={i} className="leading-relaxed">
-                        • {b}
+                        â€¢ {b}
                       </li>
                     ))}
                 </ul>
@@ -213,7 +213,7 @@ export function AdviceCard(props: {
                     .slice(0, showDetails ? 999 : 3)
                     .map((b, i) => (
                       <li key={i} className="leading-relaxed">
-                        • {b}
+                        â€¢ {b}
                       </li>
                     ))}
                 </ul>
@@ -231,7 +231,7 @@ export function AdviceCard(props: {
                     .slice(0, showDetails ? 999 : 3)
                     .map((r, i) => (
                       <li key={i} className="leading-relaxed">
-                        • {r}
+                        â€¢ {r}
                       </li>
                     ))}
                 </ul>
@@ -247,7 +247,7 @@ export function AdviceCard(props: {
                     .slice(0, showDetails ? 999 : 4)
                     .map((n, i) => (
                       <li key={i} className="leading-relaxed">
-                        • {n}
+                        â€¢ {n}
                       </li>
                     ))}
                 </ul>
@@ -272,13 +272,14 @@ export function AdviceCard(props: {
         ) : (
           <div className="opacity-70">
             {pending
-              ? "Thinking…"
+              ? "Thinkingâ€¦"
               : error
               ? "Fix the error above and try again."
-              : "Use risk management 🙂"}
+              : "Use risk management ðŸ™‚"}
           </div>
         )}
       </CardContent>
     </Card>
   );
 }
+

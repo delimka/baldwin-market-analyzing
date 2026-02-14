@@ -1,4 +1,4 @@
-import { companiesLogo } from "@/shared/data/companiesLogo";
+﻿import { companiesLogo } from "../model";
 import Marquee from "react-fast-marquee";
 
 export function TrustedClients() {
@@ -37,3 +37,5 @@ export function TrustedClients() {
     </section>
   );
 }
+
+

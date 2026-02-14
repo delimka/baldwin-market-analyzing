@@ -1,7 +1,7 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { ArrowLeft, GalleryVerticalEnd } from "lucide-react";
-import { LoginForm } from "@/features/auth/ui/LoginForm";
-import { GridBackground } from "@/shared/components/GridBackground";
+import { LoginForm } from "@/features/auth";
+import { GridBackground } from "@/shared/components";
 
 export default function LoginPage() {
   return (
@@ -42,3 +42,4 @@ export default function LoginPage() {
     </div>
   );
 }
+

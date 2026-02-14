@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { Button } from "@/shared/ui/shadcn/button";
-import { Input } from "@/shared/ui/shadcn/input";
-import { cn } from "@/shared/lib/utils";
+﻿import Link from "next/link";
+import { Button } from "@/shared/ui";
+import { Input } from "@/shared/ui";
+import { cn } from "@/shared/lib";
 
 type LoginFormProps = React.ComponentProps<"form">;
 
@@ -70,3 +70,4 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
     </form>
   );
 }
+

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useMemo, useState } from "react";
 import {
@@ -6,12 +6,12 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/shared/ui/shadcn/card";
-import { Button } from "@/shared/ui/shadcn/button";
-import { ScreenerControls } from "@/features/market/ui/ScreenerControls";
-import { ScreenerTable } from "@/features/market/ui/ScreenerTable";
-import { useScreener } from "@/features/market/model/useScreener";
-import type { ScreenerRequest } from "@/entities/market/model/types";
+} from "@/shared/ui";
+import { Button } from "@/shared/ui";
+import { ScreenerControls } from "@/features/market";
+import { ScreenerTable } from "@/features/market";
+import { useScreener } from "@/features/market";
+import type { ScreenerRequest } from "@/entities/market";
 
 export function MarketScreener() {
   const [controls, setControls] = useState<
@@ -62,7 +62,7 @@ export function MarketScreener() {
         <div className="text-xs opacity-60">
           {q.data?.asOf
             ? `asOf: ${new Date(q.data.asOf).toLocaleString()}`
-            : "—"}
+            : "â€”"}
         </div>
       </CardHeader>
 
@@ -78,3 +78,4 @@ export function MarketScreener() {
     </Card>
   );
 }
+

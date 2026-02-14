@@ -1,7 +1,7 @@
-import { fetchJson } from "./http";
-import type { Advice } from "@/entities/advice/model/adviceSchema";
-import type { MarketType } from "@/entities/market/model/types";
-import type { TF } from "./market";
+﻿import { fetchJson } from "@/shared/api";
+import type { Advice } from "../model/adviceSchema";
+import type { MarketType } from "@/entities/market";
+import type { TF } from "@/entities/market";
 
 export type AdviceRequest = {
   type: MarketType;
@@ -24,3 +24,7 @@ export function getAdvice(payload: AdviceRequest) {
     }),
   });
 }
+
+
+
+

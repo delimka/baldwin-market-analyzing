@@ -1,4 +1,4 @@
-import { MarketScreener } from "@/widgets/market-screener/ui/MarketScreener";
+﻿import { MarketScreener } from "@/widgets/market-screener";
 
 export default function Page() {
   return (
@@ -7,3 +7,4 @@ export default function Page() {
     </div>
   );
 }
+

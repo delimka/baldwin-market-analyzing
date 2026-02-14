@@ -1,13 +1,13 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import type { ComponentPropsWithoutRef } from "react";
 import { Menu, X } from "lucide-react";
-import { useIsMobile } from "@/shared/hooks/useMobile";
-import { Button } from "@/shared/ui/shadcn/button";
-import { LanguageSwitcher } from "@/shared/components/LanguageSwitcher";
+import { useIsMobile } from "@/shared/hooks";
+import { Button } from "@/shared/ui";
+import { LanguageSwitcher } from "@/shared/components";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -16,7 +16,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@/shared/ui/shadcn/navigation-menu";
+} from "@/shared/ui";
 
 const productLinks = [
   {
@@ -256,3 +256,4 @@ function ListItem({
     </li>
   );
 }
+

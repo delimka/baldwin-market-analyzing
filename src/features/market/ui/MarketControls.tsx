@@ -1,15 +1,15 @@
-"use client";
+﻿"use client";
 
-import type { MarketType } from "@/entities/market/model/types";
-import type { TF } from "@/shared/api/market";
-import { LanguageSwitcher } from "@/shared/components/LanguageSwitcher";
+import type { MarketType } from "@/entities/market";
+import type { TF } from "@/entities/market";
+import { LanguageSwitcher } from "@/shared/components";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/shared/ui/shadcn/select";
+} from "@/shared/ui";
 
 export function MarketControls(props: {
   type: MarketType;
@@ -59,3 +59,4 @@ export function MarketControls(props: {
     </>
   );
 }
+

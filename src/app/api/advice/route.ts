@@ -1,13 +1,13 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import { z, ZodError } from "zod";
 import { zodTextFormat } from "openai/helpers/zod";
 
 import { openai } from "@/entities/market/api/providers/openai";
-import { AdviceSchema } from "@/entities/advice/model/adviceSchema";
-import { computeIndicators } from "@/entities/market/lib/indicators";
+import { AdviceSchema } from "@/entities/advice";
+import { computeIndicators } from "@/entities/market";
 import { pickProvider } from "@/entities/market/api/providers";
 
-import { Candle } from "@/entities/market/model/types";
+import { Candle } from "@/entities/market";
 
 const BodySchema = z.object({
   type: z.enum(["stock", "crypto"]),
@@ -86,3 +86,4 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Unknown error" }, { status: 500 });
   }
 }
+

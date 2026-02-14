@@ -1,8 +1,8 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import Link from "next/link";
-import { Badge } from "@/shared/ui/shadcn/badge";
-import { Separator } from "@/shared/ui/shadcn/separator";
-import { GridBackground } from "@/shared/components/GridBackground";
+import { Badge } from "@/shared/ui";
+import { Separator } from "@/shared/ui";
+import { GridBackground } from "@/shared/components";
 
 export function Footer() {
   return (
@@ -92,3 +92,4 @@ export function Footer() {
     </footer>
   );
 }
+

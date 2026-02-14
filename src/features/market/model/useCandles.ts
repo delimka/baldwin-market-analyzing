@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { getCandles, type TF } from "@/shared/api/market";
-import type { CandlesResponse, MarketType } from "@/entities/market/model/types";
+import { getCandles, type TF } from "@/entities/market";
+import type { CandlesResponse, MarketType } from "@/entities/market";
 
 export function useCandles(params: {
   type: MarketType;
@@ -17,3 +17,4 @@ export function useCandles(params: {
     staleTime: 30_000,
   });
 }
+

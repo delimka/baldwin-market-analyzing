@@ -1,5 +1,5 @@
-import type { Candle } from "@/entities/market/model/types";
-import { BinanceKlinesSchema } from "@/entities/market/model/types";
+﻿import type { Candle } from "@/entities/market";
+import { BinanceKlinesSchema } from "@/entities/market";
 import type { MarketProvider, ProviderParams } from "./base";
 
 const BINANCE_BASE = process.env.BINANCE_DATA_BASE ?? "https://data-api.binance.vision";
@@ -41,3 +41,4 @@ export const BinanceProvider: MarketProvider = {
       .filter((c) => Number.isFinite(c.close));
   },
 };
+

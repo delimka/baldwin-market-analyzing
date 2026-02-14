@@ -1,4 +1,4 @@
-import { MarketTracker } from "@/widgets/market-tracker/ui/MarketTracker";
+﻿import { MarketTracker } from "@/widgets/market-tracker";
 
 export default function Home() {
   return (
@@ -7,3 +7,4 @@ export default function Home() {
     </div>
   );
 }
+

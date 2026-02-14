@@ -1,14 +1,14 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
-import type { MarketType } from "@/entities/market/model/types";
-import { cn } from "@/shared/lib/utils";
-import { useDebounce } from "@/shared/hooks/useDebounce";
+import type { MarketType } from "@/entities/market";
+import { cn } from "@/shared/lib";
+import { useDebounce } from "@/shared/hooks";
 import { useQuery } from "@tanstack/react-query";
-import { searchSymbols } from "@/shared/api/search";
+import { searchSymbols } from "@/entities/market";
 
-import { Button } from "@/shared/ui/shadcn/button";
+import { Button } from "@/shared/ui";
 import {
   Command,
   CommandEmpty,
@@ -16,12 +16,12 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/shared/ui/shadcn/command";
+} from "@/shared/ui";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/shared/ui/shadcn/popover";
+} from "@/shared/ui";
 
 type Props = {
   type: MarketType;
@@ -66,7 +66,7 @@ function SymbolPickerInner({ type, value, onApply }: Props) {
   const helperText = React.useMemo(() => {
     if (type !== "crypto") return null;
     if (q.length < 2) return "Type at least 2 characters";
-    if (searchQ.isFetching) return "Searching…";
+    if (searchQ.isFetching) return "Searchingâ€¦";
     if (enabled && !items.length) return "No matches";
     return null;
   }, [type, q.length, enabled, searchQ.isFetching, items.length]);
@@ -132,7 +132,7 @@ function SymbolPickerInner({ type, value, onApply }: Props) {
                         <div className="truncate">
                           <span className="font-medium">{it.symbol}</span>
                           {it.name ? (
-                            <span className="opacity-70"> — {it.name}</span>
+                            <span className="opacity-70"> â€” {it.name}</span>
                           ) : null}
                         </div>
                       </div>
@@ -159,3 +159,4 @@ function SymbolPickerInner({ type, value, onApply }: Props) {
     </Popover>
   );
 }
+

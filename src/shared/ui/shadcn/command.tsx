@@ -1,17 +1,17 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import { Command as CommandPrimitive } from "cmdk";
 import { SearchIcon } from "lucide-react";
 
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/shared/ui/shadcn/dialog";
+} from "./dialog";
 
 function Command({
   className,
@@ -182,3 +182,5 @@ export {
   CommandShortcut,
   CommandSeparator,
 };
+
+

@@ -1,5 +1,5 @@
-import { fetchJson } from "./http";
-import type { MarketType } from "@/entities/market/model/types";
+﻿import { fetchJson } from "@/shared/api";
+import type { MarketType } from "../model/types";
 
 export type SearchItem = { id?: string; symbol: string; name?: string };
 export type SearchResponse = { items: SearchItem[] };
@@ -12,3 +12,6 @@ export function searchSymbols(params: { type: MarketType; q: string }) {
 
   return fetchJson<SearchResponse>(`/api/search?${qs.toString()}`);
 }
+
+
+

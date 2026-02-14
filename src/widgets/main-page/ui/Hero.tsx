@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { Button } from "@/shared/ui/shadcn/button";
-import { Card } from "@/shared/ui/shadcn/card";
-import { HeroBackground } from "./HeroBackground";
+﻿import Link from "next/link";
+import { Button } from "@/shared/ui";
+import { Card } from "@/shared/ui";
+import { HeroBackground } from "@/shared/components";
 
 export function Hero() {
   return (
@@ -59,3 +59,6 @@ export function Hero() {
     </section>
   );
 }
+
+
+

@@ -1,5 +1,5 @@
-import Image from "next/image";
-import SectionTitle from "@/shared/components/SectionTitle";
+﻿import Image from "next/image";
+import { SectionTitle } from "@/shared/components";
 
 export default function FeaturesSection() {
   return (
@@ -60,3 +60,5 @@ export default function FeaturesSection() {
     </section>
   );
 }
+
+

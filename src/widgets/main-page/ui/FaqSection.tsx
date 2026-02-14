@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import SectionTitle from "@/shared/components/SectionTitle";
-import { faqsData } from "@/shared/data/faqsData";
+import { SectionTitle } from "@/shared/components";
+import { faqsData } from "../model";
 
 export function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -57,3 +57,7 @@ export function FaqSection() {
     </section>
   );
 }
+
+
+
+

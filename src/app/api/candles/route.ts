@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import { z } from "zod";
 import { pickProvider } from "@/entities/market/api/providers";
-import type { CandlesResponse } from "@/entities/market/model/types";
+import type { CandlesResponse } from "@/entities/market";
 
 const Q = z.object({
   type: z.enum(["stock", "crypto"]),
@@ -41,3 +41,4 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: "Unknown error" }, { status: 400 });
   }
 }
+

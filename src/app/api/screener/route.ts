@@ -1,8 +1,8 @@
-// import { NextResponse } from "next/server";
+﻿// import { NextResponse } from "next/server";
 // import { z } from "zod";
 // import { pickProvider } from "@/entities/market/api/providers";
-// import type { Candle } from "@/entities/market/model/types";
-// import { chunk } from "@/shared/lib/array/chunk";
+// import type { Candle } from "@/entities/market";
+// import { chunk } from "@/shared/lib";
 
 // const BINANCE_BASE =
 //   process.env.BINANCE_DATA_BASE ?? "https://data-api.binance.vision";
@@ -22,14 +22,14 @@
 //   timeframe: z.enum(["1D", "1H"]).default("1H"),
 //   days: z.coerce.number().min(2).max(365).default(7),
 
-//   // сколько вернуть в ответе
+//   // ÑÐºÐ¾Ð»ÑŒÐºÐ¾ Ð²ÐµÑ€Ð½ÑƒÑ‚ÑŒ Ð² Ð¾Ñ‚Ð²ÐµÑ‚Ðµ
 //   top: z
 //     .union([z.literal(5), z.literal(10), z.literal(20), z.literal(30)])
 //     .default(20),
 
-//   // формирование универсума
-//   universeSize: z.coerce.number().min(5).max(50).default(20), // хотим 20
-//   liquidityPool: z.coerce.number().min(30).max(500).default(200), // из скольких самых ликвидных выбирать
+//   // Ñ„Ð¾Ñ€Ð¼Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ ÑƒÐ½Ð¸Ð²ÐµÑ€ÑÑƒÐ¼Ð°
+//   universeSize: z.coerce.number().min(5).max(50).default(20), // Ñ…Ð¾Ñ‚Ð¸Ð¼ 20
+//   liquidityPool: z.coerce.number().min(30).max(500).default(200), // Ð¸Ð· ÑÐºÐ¾Ð»ÑŒÐºÐ¸Ñ… ÑÐ°Ð¼Ñ‹Ñ… Ð»Ð¸ÐºÐ²Ð¸Ð´Ð½Ñ‹Ñ… Ð²Ñ‹Ð±Ð¸Ñ€Ð°Ñ‚ÑŒ
 
 //   withNews: z.boolean().default(true),
 // });
@@ -260,9 +260,9 @@
 //                   0
 //                 ) / newsCount;
 
-//           // ---- Signal logic (простая, но полезная) ----
-//           // LONG: momentum +, MACD hist >= 0, RSI не перекуплен
-//           // SHORT: momentum -, MACD hist <= 0, RSI не перепродан (или перекуплен с разворотом)
+//           // ---- Signal logic (Ð¿Ñ€Ð¾ÑÑ‚Ð°Ñ, Ð½Ð¾ Ð¿Ð¾Ð»ÐµÐ·Ð½Ð°Ñ) ----
+//           // LONG: momentum +, MACD hist >= 0, RSI Ð½Ðµ Ð¿ÐµÑ€ÐµÐºÑƒÐ¿Ð»ÐµÐ½
+//           // SHORT: momentum -, MACD hist <= 0, RSI Ð½Ðµ Ð¿ÐµÑ€ÐµÐ¿Ñ€Ð¾Ð´Ð°Ð½ (Ð¸Ð»Ð¸ Ð¿ÐµÑ€ÐµÐºÑƒÐ¿Ð»ÐµÐ½ Ñ Ñ€Ð°Ð·Ð²Ð¾Ñ€Ð¾Ñ‚Ð¾Ð¼)
 //           let signal: "LONG" | "SHORT" | "NEUTRAL" = "NEUTRAL";
 
 //           const longOk =
@@ -275,14 +275,14 @@
 
 //           // ---- Score ----
 //           // newsSentiment: [-1..+1] -> *10
-//           // вола штрафуем, но не убиваем (иначе топ-вола не покажет ничего)
+//           // Ð²Ð¾Ð»Ð° ÑˆÑ‚Ñ€Ð°Ñ„ÑƒÐµÐ¼, Ð½Ð¾ Ð½Ðµ ÑƒÐ±Ð¸Ð²Ð°ÐµÐ¼ (Ð¸Ð½Ð°Ñ‡Ðµ Ñ‚Ð¾Ð¿-Ð²Ð¾Ð»Ð° Ð½Ðµ Ð¿Ð¾ÐºÐ°Ð¶ÐµÑ‚ Ð½Ð¸Ñ‡ÐµÐ³Ð¾)
 //           const baseScore =
 //             0.35 * change24hPct +
 //             0.35 * momentum +
 //             0.2 * (newsSentiment * 10) +
-//             0.1 * (hist * 100); // hist обычно маленький
+//             0.1 * (hist * 100); // hist Ð¾Ð±Ñ‹Ñ‡Ð½Ð¾ Ð¼Ð°Ð»ÐµÐ½ÑŒÐºÐ¸Ð¹
 
-//           const volPenalty = Math.max(0, volBarPct - 1.2) * 0.8; // “вола на бар”
+//           const volPenalty = Math.max(0, volBarPct - 1.2) * 0.8; // â€œÐ²Ð¾Ð»Ð° Ð½Ð° Ð±Ð°Ñ€â€
 //           const signed = signal === "SHORT" ? -1 : signal === "LONG" ? 1 : 0;
 
 //           const score =
@@ -344,3 +344,4 @@
 //     return NextResponse.json({ error: "Unknown error" }, { status: 400 });
 //   }
 // }
+

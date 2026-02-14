@@ -1,5 +1,5 @@
-import Papa from "papaparse";
-import type { Candle, StooqRow } from "@/entities/market/model/types";
+﻿import Papa from "papaparse";
+import type { Candle, StooqRow } from "@/entities/market";
 import type { MarketProvider, ProviderParams } from "./base";
 
 export const StooqProvider: MarketProvider = {
@@ -37,3 +37,4 @@ export const StooqProvider: MarketProvider = {
       .filter((c) => Number.isFinite(c.close));
   },
 };
+

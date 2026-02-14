@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/shared/ui/shadcn/dialog";
-import { Button } from "@/shared/ui/shadcn/button";
-import { Input } from "@/shared/ui/shadcn/input";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/shared/ui";
+import { Button } from "@/shared/ui";
+import { Input } from "@/shared/ui";
 
 export function LoginDialog() {
   return (
@@ -30,7 +30,7 @@ export function LoginDialog() {
             <Input
               id="login-password"
               type="password"
-              placeholder="••••••••"
+              placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
             />
           </div>
           <Button className="btn-primary">Continue</Button>
@@ -39,3 +39,4 @@ export function LoginDialog() {
     </Dialog>
   );
 }
+

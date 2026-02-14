@@ -1,4 +1,4 @@
-import type { ScreenerItem } from "@/entities/market/model/types";
+﻿import type { ScreenerItem } from "@/entities/market";
 
 export function ScreenerTable({ items }: { items: ScreenerItem[] }) {
   return (
@@ -28,7 +28,7 @@ export function ScreenerTable({ items }: { items: ScreenerItem[] }) {
                 {it.newsCount} ({it.newsSentiment.toFixed(2)})
               </td>
               <td className="p-2 text-right">{it.score.toFixed(3)}</td>
-              <td className="p-2 opacity-80">{it.reasons.join(" · ")}</td>
+              <td className="p-2 opacity-80">{it.reasons.join(" Â· ")}</td>
             </tr>
           ))}
         </tbody>
@@ -36,3 +36,4 @@ export function ScreenerTable({ items }: { items: ScreenerItem[] }) {
     </div>
   );
 }
+

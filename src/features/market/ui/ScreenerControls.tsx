@@ -1,18 +1,18 @@
-"use client";
+﻿"use client";
 
-import { Button } from "@/shared/ui/shadcn/button";
+import { Button } from "@/shared/ui";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/shared/ui/shadcn/select";
+} from "@/shared/ui";
 import type {
   ScreenerRequest,
   ScreenerTop,
   ScreenerTimeframe,
-} from "@/entities/market/model/types";
+} from "@/entities/market";
 
 export function ScreenerControls(props: {
   value: Pick<ScreenerRequest, "top" | "timeframe" | "withNews">;
@@ -74,3 +74,4 @@ export function ScreenerControls(props: {
     </div>
   );
 }
+

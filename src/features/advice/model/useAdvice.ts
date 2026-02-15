@@ -9,4 +9,3 @@ export function useAdvice() {
     mutationFn: (payload) => getAdvice(payload),
   });
 }
-

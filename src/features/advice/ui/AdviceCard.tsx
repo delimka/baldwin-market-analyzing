@@ -1,38 +1,21 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui";
 import { Badge } from "@/shared/ui";
+import { Loader } from "@/shared/ui";
 import { Separator } from "@/shared/ui";
-import { Spinner } from "@/shared/components";
 import type { Advice } from "@/entities/advice";
-
-type Action = Advice["recommendation"]["action"];
-
-function actionStyles(action: Action) {
-  switch (action) {
-    case "BUY":
-      return { chip: "bg-green-600 text-white", ring: "ring-green-600/20" };
-    case "SELL":
-      return { chip: "bg-red-600 text-white", ring: "ring-red-600/20" };
-    case "HOLD":
-      return { chip: "bg-blue-600 text-white", ring: "ring-blue-600/20" };
-    case "WATCH":
-    default:
-      return { chip: "bg-yellow-500 text-black", ring: "ring-yellow-500/20" };
-  }
-}
-
-function fmtNum(x: number | null) {
-  if (x === null) return "";
-
-  const abs = Math.abs(x);
-  if (abs >= 1000) return x.toFixed(0);
-  if (abs >= 100) return x.toFixed(2);
-  if (abs >= 1) return x.toFixed(4);
-  return x.toPrecision(6);
-}
+import {
+  ADVICE_CHECKS_PREVIEW_LIMIT,
+  ADVICE_ITEMS_ALL_LIMIT,
+  ADVICE_ITEMS_PREVIEW_LIMIT,
+  formatLevelValue,
+  getActionStyles,
+  getConfidencePercent,
+  getHorizonKey,
+} from "@/features/advice/lib/presentation";
 
 export function AdviceCard(props: {
   pending: boolean;
@@ -42,28 +25,10 @@ export function AdviceCard(props: {
   const { t } = useTranslation();
   const { pending, error, data } = props;
   const [showDetails, setShowDetails] = useState(false);
-
-  const confPct = useMemo(() => {
-    if (!data) return 0;
-    return Math.max(
-      0,
-      Math.min(100, Math.round(data.recommendation.confidence * 100)),
-    );
-  }, [data]);
-
-  const horizonLabel = (h: Advice["recommendation"]["horizon"]) => {
-    switch (h) {
-      case "intraday":
-        return t("advice.horizon.intraday");
-      case "swing":
-        return t("advice.horizon.swing");
-      case "long_term":
-        return t("advice.horizon.longTerm");
-    }
-  };
+  const confPct = getConfidencePercent(data);
 
   const a = data?.recommendation.action;
-  const styles = a ? actionStyles(a) : null;
+  const styles = a ? getActionStyles(a) : null;
 
   return (
     <Card className="overflow-hidden rounded-2xl">
@@ -90,7 +55,9 @@ export function AdviceCard(props: {
                 </span>
               </div>
             ) : (
-              ""
+              <div className="mt-1 text-xs opacity-70">
+                {t("advice.educationalSignal")}
+              </div>
             )}
           </div>
 
@@ -112,7 +79,7 @@ export function AdviceCard(props: {
 
         {pending ? (
           <div className="flex items-center gap-2 text-sm opacity-80">
-            <Spinner size={16} />
+            <Loader size={16} />
             <span>{t("advice.analyzing")}</span>
           </div>
         ) : error ? (
@@ -124,7 +91,7 @@ export function AdviceCard(props: {
               <div className="mt-1 flex items-end justify-between gap-2">
                 <div className="text-lg font-semibold">{confPct}%</div>
                 <div className="text-xs opacity-70">
-                  {horizonLabel(data.recommendation.horizon)}
+                  {t(getHorizonKey(data.recommendation.horizon))}
                 </div>
               </div>
               <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-muted">
@@ -140,18 +107,20 @@ export function AdviceCard(props: {
               <div className="mt-2 grid grid-cols-3 gap-2 text-xs">
                 <div className="rounded-lg bg-muted p-2">
                   <div className="opacity-70">{t("advice.entry")}</div>
-                  <div className="font-medium">{fmtNum(data.levels.entry)}</div>
+                  <div className="font-medium">
+                    {formatLevelValue(data.levels.entry)}
+                  </div>
                 </div>
                 <div className="rounded-lg bg-muted p-2">
                   <div className="opacity-70">{t("advice.take")}</div>
                   <div className="font-medium">
-                    {fmtNum(data.levels.take_profit)}
+                    {formatLevelValue(data.levels.take_profit)}
                   </div>
                 </div>
                 <div className="rounded-lg bg-muted p-2">
                   <div className="opacity-70">{t("advice.stop")}</div>
                   <div className="font-medium">
-                    {fmtNum(data.levels.stop_loss)}
+                    {formatLevelValue(data.levels.stop_loss)}
                   </div>
                 </div>
               </div>
@@ -192,7 +161,12 @@ export function AdviceCard(props: {
                 </div>
                 <ul className="mt-2 space-y-1 text-xs opacity-90">
                   {data.rationale.bullish
-                    .slice(0, showDetails ? 999 : 3)
+                    .slice(
+                      0,
+                      showDetails
+                        ? ADVICE_ITEMS_ALL_LIMIT
+                        : ADVICE_ITEMS_PREVIEW_LIMIT,
+                    )
                     .map((b, i) => (
                       <li key={i} className="leading-relaxed">
                         {b}
@@ -212,7 +186,12 @@ export function AdviceCard(props: {
                 </div>
                 <ul className="mt-2 space-y-1 text-xs opacity-90">
                   {data.rationale.bearish
-                    .slice(0, showDetails ? 999 : 3)
+                    .slice(
+                      0,
+                      showDetails
+                        ? ADVICE_ITEMS_ALL_LIMIT
+                        : ADVICE_ITEMS_PREVIEW_LIMIT,
+                    )
                     .map((b, i) => (
                       <li key={i} className="leading-relaxed">
                         {b}
@@ -232,7 +211,12 @@ export function AdviceCard(props: {
                 </div>
                 <ul className="mt-2 space-y-1 text-xs opacity-90">
                   {data.rationale.risks
-                    .slice(0, showDetails ? 999 : 3)
+                    .slice(
+                      0,
+                      showDetails
+                        ? ADVICE_ITEMS_ALL_LIMIT
+                        : ADVICE_ITEMS_PREVIEW_LIMIT,
+                    )
                     .map((r, i) => (
                       <li key={i} className="leading-relaxed">
                         {r}
@@ -247,7 +231,12 @@ export function AdviceCard(props: {
                 <div className="font-medium">{t("advice.nextChecks")}</div>
                 <ul className="mt-2 space-y-1 text-xs opacity-90">
                   {data.next_checks
-                    .slice(0, showDetails ? 999 : 4)
+                    .slice(
+                      0,
+                      showDetails
+                        ? ADVICE_ITEMS_ALL_LIMIT
+                        : ADVICE_CHECKS_PREVIEW_LIMIT,
+                    )
                     .map((n, i) => (
                       <li key={i} className="leading-relaxed">
                         {n}
@@ -275,7 +264,7 @@ export function AdviceCard(props: {
           <div className="rounded-xl border bg-background p-6">
             {pending ? (
               <div className="flex min-h-20 items-center justify-center gap-3">
-                <Spinner size={22} />
+                <Loader size={22} />
                 <span className="text-sm text-muted-foreground">
                   {t("advice.buildingAdvice")}
                 </span>

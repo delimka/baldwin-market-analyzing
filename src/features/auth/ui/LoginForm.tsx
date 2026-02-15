@@ -27,6 +27,7 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
           </label>
           <Input id="email" type="email" placeholder="m@example.com" required />
         </div>
+
         <div className="grid gap-2">
           <div className="flex items-center">
             <label className="text-sm font-medium" htmlFor="password">
@@ -41,6 +42,7 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
           </div>
           <Input id="password" type="password" required />
         </div>
+
         <Button type="submit" className="btn-primary">
           {t("login.form.logIn")}
         </Button>

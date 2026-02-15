@@ -6,6 +6,7 @@ export * from "./shadcn/command";
 export * from "./shadcn/dialog";
 export * from "./shadcn/dropdown-menu";
 export * from "./shadcn/input";
+export * from "./shadcn/loader";
 export * from "./shadcn/navigation-menu";
 export * from "./shadcn/popover";
 export * from "./shadcn/select";

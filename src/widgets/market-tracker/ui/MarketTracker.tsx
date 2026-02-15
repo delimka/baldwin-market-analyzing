@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui";
 import { Badge } from "@/shared/ui";
 import { Button } from "@/shared/ui";
+import { Loader } from "@/shared/ui";
 import { Separator } from "@/shared/ui";
 import type { MarketType } from "@/entities/market";
 import type { TF } from "@/entities/market";
@@ -19,7 +20,6 @@ import { PriceChart } from "@/entities/market";
 import { AdviceCard } from "@/features/advice";
 import { useAdvice } from "@/features/advice";
 import { useCandles } from "@/features/market";
-import { Spinner } from "@/shared/components";
 
 export function MarketTracker() {
   const { i18n, t } = useTranslation();
@@ -86,7 +86,7 @@ export function MarketTracker() {
 
           {candlesQ.isLoading ? (
             <div className="flex min-h-56 items-center justify-center gap-3 rounded-xl border bg-background">
-              <Spinner size={24} />
+              <Loader size={24} />
               <span className="text-sm text-muted-foreground">
                 {t("marketTracker.loadingCandles")}
               </span>

@@ -5,4 +5,3 @@ export { LanguageSwitcher } from "./LanguageSwitcher";
 export { LoginDialog } from "./LoginDialog";
 export { NavBar } from "./NavBar";
 export { default as SectionTitle } from "./SectionTitle";
-export { Spinner } from "./Spinner";

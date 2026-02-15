@@ -1,19 +1,24 @@
-import type { ScreenerItem } from "@/entities/market/model/types";
+"use client";
+
+import { useTranslation } from "react-i18next";
+import type { ScreenerItem } from "@/entities/market";
 
 export function ScreenerTable({ items }: { items: ScreenerItem[] }) {
+  const { t } = useTranslation();
+
   return (
     <div className="overflow-auto rounded-md border">
       <table className="min-w-245 w-full text-sm">
         <thead className="bg-muted/50">
           <tr>
-            <th className="text-left p-2">#</th>
-            <th className="text-left p-2">Symbol</th>
-            <th className="text-right p-2">Price</th>
-            <th className="text-right p-2">24h %</th>
-            <th className="text-right p-2">Vol %</th>
-            <th className="text-right p-2">News</th>
-            <th className="text-right p-2">Score</th>
-            <th className="text-left p-2">Why</th>
+            <th className="p-2 text-left">#</th>
+            <th className="p-2 text-left">{t("screenerTable.symbol")}</th>
+            <th className="p-2 text-right">{t("screenerTable.price")}</th>
+            <th className="p-2 text-right">24h %</th>
+            <th className="p-2 text-right">{t("screenerTable.volume")}</th>
+            <th className="p-2 text-right">{t("screenerTable.news")}</th>
+            <th className="p-2 text-right">{t("screenerTable.score")}</th>
+            <th className="p-2 text-left">{t("screenerTable.why")}</th>
           </tr>
         </thead>
         <tbody>
@@ -28,7 +33,7 @@ export function ScreenerTable({ items }: { items: ScreenerItem[] }) {
                 {it.newsCount} ({it.newsSentiment.toFixed(2)})
               </td>
               <td className="p-2 text-right">{it.score.toFixed(3)}</td>
-              <td className="p-2 opacity-80">{it.reasons.join(" · ")}</td>
+              <td className="p-2 opacity-80">{it.reasons.join(" | ")}</td>
             </tr>
           ))}
         </tbody>

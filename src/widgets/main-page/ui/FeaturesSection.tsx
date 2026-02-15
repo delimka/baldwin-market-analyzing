@@ -1,13 +1,18 @@
+"use client";
+
 import Image from "next/image";
-import SectionTitle from "@/shared/components/SectionTitle";
+import { useTranslation } from "react-i18next";
+import { SectionTitle } from "@/shared/components";
 
 export default function FeaturesSection() {
+  const { t } = useTranslation();
+
   return (
     <section id="features" className="py-6">
       <SectionTitle
-        text1="Features"
-        text2="A clearer path from scan to signal"
-        text3="Focused dashboards and AI insights to help you move fast without the noise."
+        text1={t("features.overline")}
+        text2={t("features.title")}
+        text3={t("features.subtitle")}
       />
 
       <div className="mt-10 grid gap-6 md:grid-cols-3">
@@ -20,10 +25,10 @@ export default function FeaturesSection() {
             width={400}
           />
           <h3 className="mt-4 text-base font-semibold text-foreground">
-            Momentum snapshots
+            {t("features.items.momentum.title")}
           </h3>
           <p className="mt-1 text-sm text-muted-foreground">
-            Spot fast moves, volume shifts, and trend changes in seconds.
+            {t("features.items.momentum.description")}
           </p>
         </div>
         <div className="group rounded-2xl border bg-background p-4 transition duration-300 hover:-translate-y-0.5">
@@ -35,10 +40,10 @@ export default function FeaturesSection() {
             width={400}
           />
           <h3 className="mt-4 text-base font-semibold text-foreground">
-            AI-guided analysis
+            {t("features.items.ai.title")}
           </h3>
           <p className="mt-1 text-sm text-muted-foreground">
-            Ask for trade context and receive clear, explainable guidance.
+            {t("features.items.ai.description")}
           </p>
         </div>
         <div className="group rounded-2xl border bg-background p-4 transition duration-300 hover:-translate-y-0.5">
@@ -50,10 +55,10 @@ export default function FeaturesSection() {
             width={400}
           />
           <h3 className="mt-4 text-base font-semibold text-foreground">
-            Cross-market flow
+            {t("features.items.flow.title")}
           </h3>
           <p className="mt-1 text-sm text-muted-foreground">
-            Track crypto and stocks together with a unified watchlist.
+            {t("features.items.flow.description")}
           </p>
         </div>
       </div>

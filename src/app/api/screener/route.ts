@@ -1,8 +1,8 @@
-// import { NextResponse } from "next/server";
+﻿// import { NextResponse } from "next/server";
 // import { z } from "zod";
 // import { pickProvider } from "@/entities/market/api/providers";
-// import type { Candle } from "@/entities/market/model/types";
-// import { chunk } from "@/shared/lib/array/chunk";
+// import type { Candle } from "@/entities/market";
+// import { chunk } from "@/shared/lib";
 
 // const BINANCE_BASE =
 //   process.env.BINANCE_DATA_BASE ?? "https://data-api.binance.vision";
@@ -22,14 +22,14 @@
 //   timeframe: z.enum(["1D", "1H"]).default("1H"),
 //   days: z.coerce.number().min(2).max(365).default(7),
 
-//   // сколько вернуть в ответе
+//   // how many items to return
 //   top: z
 //     .union([z.literal(5), z.literal(10), z.literal(20), z.literal(30)])
 //     .default(20),
 
-//   // формирование универсума
-//   universeSize: z.coerce.number().min(5).max(50).default(20), // хотим 20
-//   liquidityPool: z.coerce.number().min(30).max(500).default(200), // из скольких самых ликвидных выбирать
+//   // universe building
+//   universeSize: z.coerce.number().min(5).max(50).default(20), // target 20
+//   liquidityPool: z.coerce.number().min(30).max(500).default(200), // select from most liquid symbols
 
 //   withNews: z.boolean().default(true),
 // });
@@ -260,9 +260,9 @@
 //                   0
 //                 ) / newsCount;
 
-//           // ---- Signal logic (простая, но полезная) ----
-//           // LONG: momentum +, MACD hist >= 0, RSI не перекуплен
-//           // SHORT: momentum -, MACD hist <= 0, RSI не перепродан (или перекуплен с разворотом)
+//           // ---- Signal logic (simple and practical) ----
+//           // LONG: momentum +, MACD hist >= 0, RSI not overbought
+//           // SHORT: momentum -, MACD hist <= 0, RSI not oversold (or reversing from overbought)
 //           let signal: "LONG" | "SHORT" | "NEUTRAL" = "NEUTRAL";
 
 //           const longOk =
@@ -275,14 +275,14 @@
 
 //           // ---- Score ----
 //           // newsSentiment: [-1..+1] -> *10
-//           // вола штрафуем, но не убиваем (иначе топ-вола не покажет ничего)
+//           // penalize volatility, but keep high-vol symbols visible
 //           const baseScore =
 //             0.35 * change24hPct +
 //             0.35 * momentum +
 //             0.2 * (newsSentiment * 10) +
-//             0.1 * (hist * 100); // hist обычно маленький
+//             0.1 * (hist * 100); // hist is usually small
 
-//           const volPenalty = Math.max(0, volBarPct - 1.2) * 0.8; // “вола на бар”
+//           const volPenalty = Math.max(0, volBarPct - 1.2) * 0.8; // "bar volatility"
 //           const signed = signal === "SHORT" ? -1 : signal === "LONG" ? 1 : 0;
 
 //           const score =
@@ -344,3 +344,4 @@
 //     return NextResponse.json({ error: "Unknown error" }, { status: 400 });
 //   }
 // }
+

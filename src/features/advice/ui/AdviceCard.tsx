@@ -1,15 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/shared/ui/shadcn/card";
-import { Badge } from "@/shared/ui/shadcn/badge";
-import { Separator } from "@/shared/ui/shadcn/separator";
-import type { Advice } from "@/entities/advice/model/adviceSchema";
+import { useTranslation } from "react-i18next";
+import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui";
+import { Badge } from "@/shared/ui";
+import { Separator } from "@/shared/ui";
+import { Spinner } from "@/shared/components";
+import type { Advice } from "@/entities/advice";
 
 type Action = Advice["recommendation"]["action"];
 
@@ -28,7 +25,7 @@ function actionStyles(action: Action) {
 }
 
 function fmtNum(x: number | null) {
-  if (x === null) return "—";
+  if (x === null) return "";
 
   const abs = Math.abs(x);
   if (abs >= 1000) return x.toFixed(0);
@@ -37,22 +34,12 @@ function fmtNum(x: number | null) {
   return x.toPrecision(6);
 }
 
-function horizonLabel(h: Advice["recommendation"]["horizon"]) {
-  switch (h) {
-    case "intraday":
-      return "Intraday";
-    case "swing":
-      return "Swing";
-    case "long_term":
-      return "Long-term";
-  }
-}
-
 export function AdviceCard(props: {
   pending: boolean;
   data: Advice | null;
   error?: string | null;
 }) {
+  const { t } = useTranslation();
   const { pending, error, data } = props;
   const [showDetails, setShowDetails] = useState(false);
 
@@ -60,20 +47,31 @@ export function AdviceCard(props: {
     if (!data) return 0;
     return Math.max(
       0,
-      Math.min(100, Math.round(data.recommendation.confidence * 100))
+      Math.min(100, Math.round(data.recommendation.confidence * 100)),
     );
   }, [data]);
+
+  const horizonLabel = (h: Advice["recommendation"]["horizon"]) => {
+    switch (h) {
+      case "intraday":
+        return t("advice.horizon.intraday");
+      case "swing":
+        return t("advice.horizon.swing");
+      case "long_term":
+        return t("advice.horizon.longTerm");
+    }
+  };
 
   const a = data?.recommendation.action;
   const styles = a ? actionStyles(a) : null;
 
   return (
-    <Card className="rounded-2xl overflow-hidden">
+    <Card className="overflow-hidden rounded-2xl">
       <CardHeader className="space-y-2">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <CardTitle className="text-base flex items-center gap-2">
-              Model signal
+            <CardTitle className="flex items-center gap-2 text-base">
+              {t("advice.modelSignal")}
               {data ? (
                 <Badge variant="secondary" className="font-normal">
                   {data.asset.type.toUpperCase()} · {data.timeframe}
@@ -82,17 +80,18 @@ export function AdviceCard(props: {
             </CardTitle>
 
             {data ? (
-              <div className="mt-1 text-xs opacity-70 flex flex-wrap items-center gap-x-2 gap-y-1">
+              <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs opacity-70">
                 <span className="font-medium opacity-90">
                   {data.asset.symbol.toUpperCase()}
                 </span>
                 <span>· {data.asset.currency.toUpperCase()}</span>
-                <span className="opacity-60">·</span>
-                <span className="opacity-80">Source: {data.asset.source}</span>
+                <span className="opacity-80">
+                  {t("advice.source")}: {data.asset.source}
+                </span>
               </div>
             ) : (
               <div className="mt-1 text-xs opacity-70">
-                Educational signal (not financial advice)
+                {t("advice.educationalSignal")}
               </div>
             )}
           </div>
@@ -113,22 +112,24 @@ export function AdviceCard(props: {
           ) : null}
         </div>
 
-        {/* status row */}
         {pending ? (
-          <div className="text-sm opacity-80">Thinking…</div>
+          <div className="flex items-center gap-2 text-sm opacity-80">
+            <Spinner size={16} />
+            <span>{t("advice.analyzing")}</span>
+          </div>
         ) : error ? (
           <div className="text-sm text-red-600">{error}</div>
         ) : data ? (
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+          <div className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-3">
             <div className="rounded-xl border bg-background p-3">
-              <div className="text-xs opacity-70">Confidence</div>
+              <div className="text-xs opacity-70">{t("advice.confidence")}</div>
               <div className="mt-1 flex items-end justify-between gap-2">
                 <div className="text-lg font-semibold">{confPct}%</div>
                 <div className="text-xs opacity-70">
                   {horizonLabel(data.recommendation.horizon)}
                 </div>
               </div>
-              <div className="mt-2 h-2 w-full rounded-full bg-muted overflow-hidden">
+              <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-muted">
                 <div
                   className="h-full bg-primary"
                   style={{ width: `${confPct}%` }}
@@ -137,20 +138,20 @@ export function AdviceCard(props: {
             </div>
 
             <div className="rounded-xl border bg-background p-3">
-              <div className="text-xs opacity-70">Levels</div>
+              <div className="text-xs opacity-70">{t("advice.levels")}</div>
               <div className="mt-2 grid grid-cols-3 gap-2 text-xs">
                 <div className="rounded-lg bg-muted p-2">
-                  <div className="opacity-70">Entry</div>
+                  <div className="opacity-70">{t("advice.entry")}</div>
                   <div className="font-medium">{fmtNum(data.levels.entry)}</div>
                 </div>
                 <div className="rounded-lg bg-muted p-2">
-                  <div className="opacity-70">Take</div>
+                  <div className="opacity-70">{t("advice.take")}</div>
                   <div className="font-medium">
                     {fmtNum(data.levels.take_profit)}
                   </div>
                 </div>
                 <div className="rounded-lg bg-muted p-2">
-                  <div className="opacity-70">Stop</div>
+                  <div className="opacity-70">{t("advice.stop")}</div>
                   <div className="font-medium">
                     {fmtNum(data.levels.stop_loss)}
                   </div>
@@ -159,16 +160,16 @@ export function AdviceCard(props: {
             </div>
 
             <div className="rounded-xl border bg-background p-3">
-              <div className="text-xs opacity-70">Risk</div>
+              <div className="text-xs opacity-70">{t("advice.risk")}</div>
               <div className="mt-1 flex items-center justify-between gap-2">
                 <div className="text-lg font-semibold">
-                  ≤ {data.risk_management.max_risk_pct}%
+                  {data.risk_management.max_risk_pct}%
                 </div>
                 <Badge variant="secondary" className="text-xs">
-                  Risk mgmt
+                  {t("advice.riskMgmt")}
                 </Badge>
               </div>
-              <div className="mt-2 text-xs opacity-80 line-clamp-3">
+              <div className="mt-2 line-clamp-3 text-xs opacity-80">
                 {data.risk_management.note}
               </div>
             </div>
@@ -181,11 +182,12 @@ export function AdviceCard(props: {
 
         {!pending && !error && data ? (
           <>
-            {/* pros/cons/risks */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
               <div className="rounded-xl border bg-background p-3">
                 <div className="flex items-center justify-between">
-                  <div className="font-medium text-green-700">Bullish</div>
+                  <div className="font-medium text-green-700">
+                    {t("advice.bullish")}
+                  </div>
                   <Badge variant="secondary" className="text-xs">
                     {data.rationale.bullish.length}
                   </Badge>
@@ -195,7 +197,7 @@ export function AdviceCard(props: {
                     .slice(0, showDetails ? 999 : 3)
                     .map((b, i) => (
                       <li key={i} className="leading-relaxed">
-                        • {b}
+                        {b}
                       </li>
                     ))}
                 </ul>
@@ -203,7 +205,7 @@ export function AdviceCard(props: {
 
               <div className="rounded-xl border bg-background p-3">
                 <div className="flex items-center justify-between">
-                  <div className="font-medium text-red-700">Bearish</div>
+                  <div className="font-medium text-red-700">{t("advice.bearish")}</div>
                   <Badge variant="secondary" className="text-xs">
                     {data.rationale.bearish.length}
                   </Badge>
@@ -213,7 +215,7 @@ export function AdviceCard(props: {
                     .slice(0, showDetails ? 999 : 3)
                     .map((b, i) => (
                       <li key={i} className="leading-relaxed">
-                        • {b}
+                        {b}
                       </li>
                     ))}
                 </ul>
@@ -221,7 +223,7 @@ export function AdviceCard(props: {
 
               <div className="rounded-xl border bg-background p-3">
                 <div className="flex items-center justify-between">
-                  <div className="font-medium text-yellow-700">Risks</div>
+                  <div className="font-medium text-yellow-700">{t("advice.risks")}</div>
                   <Badge variant="secondary" className="text-xs">
                     {data.rationale.risks.length}
                   </Badge>
@@ -231,51 +233,56 @@ export function AdviceCard(props: {
                     .slice(0, showDetails ? 999 : 3)
                     .map((r, i) => (
                       <li key={i} className="leading-relaxed">
-                        • {r}
+                        {r}
                       </li>
                     ))}
                 </ul>
               </div>
             </div>
 
-            {/* next checks */}
             {data.next_checks.length ? (
               <div className="rounded-xl border bg-background p-3">
-                <div className="font-medium">Next checks</div>
+                <div className="font-medium">{t("advice.nextChecks")}</div>
                 <ul className="mt-2 space-y-1 text-xs opacity-90">
                   {data.next_checks
                     .slice(0, showDetails ? 999 : 4)
                     .map((n, i) => (
                       <li key={i} className="leading-relaxed">
-                        • {n}
+                        {n}
                       </li>
                     ))}
                 </ul>
               </div>
             ) : null}
 
-            {/* footer */}
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <button
                 type="button"
-                className="text-xs opacity-70 hover:opacity-100 underline underline-offset-4 w-fit"
+                className="w-fit text-xs opacity-70 underline underline-offset-4 hover:opacity-100"
                 onClick={() => setShowDetails((v) => !v)}
               >
-                {showDetails ? "Hide details" : "Show more"}
+                {showDetails ? t("advice.hideDetails") : t("advice.showMore")}
               </button>
 
-              <div className="text-xs opacity-60 italic line-clamp-2">
+              <div className="line-clamp-2 text-xs italic opacity-60">
                 {data.disclaimer}
               </div>
             </div>
           </>
         ) : (
-          <div className="opacity-70">
-            {pending
-              ? "Thinking…"
-              : error
-              ? "Fix the error above and try again."
-              : "Use risk management 🙂"}
+          <div className="rounded-xl border bg-background p-6">
+            {pending ? (
+              <div className="flex min-h-20 items-center justify-center gap-3">
+                <Spinner size={22} />
+                <span className="text-sm text-muted-foreground">
+                  {t("advice.buildingAdvice")}
+                </span>
+              </div>
+            ) : (
+              <div className="opacity-70">
+                {error ? t("advice.fixAndRetry") : t("advice.useRiskManagement")}
+              </div>
+            )}
           </div>
         )}
       </CardContent>

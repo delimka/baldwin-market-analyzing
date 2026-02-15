@@ -1,4 +1,4 @@
-import { ScreenerRequest, ScreenerResponse } from "@/entities/market/model/types";
+﻿import { ScreenerRequest, ScreenerResponse } from "@/entities/market";
 
 export async function fetchScreener(
   body: ScreenerRequest
@@ -12,3 +12,4 @@ export async function fetchScreener(
     throw new Error(await res.text().catch(() => "Failed to load screener"));
   return res.json();
 }
+

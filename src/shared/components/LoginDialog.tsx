@@ -1,39 +1,42 @@
 "use client";
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/shared/ui/shadcn/dialog";
-import { Button } from "@/shared/ui/shadcn/button";
-import { Input } from "@/shared/ui/shadcn/input";
+import { useTranslation } from "react-i18next";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/shared/ui";
+import { Button } from "@/shared/ui";
+import { Input } from "@/shared/ui";
 
 export function LoginDialog() {
+  const { t } = useTranslation();
+
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="ghost" className="border border-border/70">
-          Log in
+          {t("login.dialog.title")}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Log in</DialogTitle>
+          <DialogTitle>{t("login.dialog.title")}</DialogTitle>
         </DialogHeader>
         <form className="grid gap-4">
           <div className="grid gap-2">
             <label className="text-sm font-medium" htmlFor="login-email">
-              Email
+              {t("login.form.email")}
             </label>
             <Input id="login-email" type="email" placeholder="you@domain.com" />
           </div>
           <div className="grid gap-2">
             <label className="text-sm font-medium" htmlFor="login-password">
-              Password
+              {t("login.form.password")}
             </label>
             <Input
               id="login-password"
               type="password"
-              placeholder="••••••••"
+              placeholder="********"
             />
           </div>
-          <Button className="btn-primary">Continue</Button>
+          <Button className="btn-primary">{t("login.dialog.continue")}</Button>
         </form>
       </DialogContent>
     </Dialog>

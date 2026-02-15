@@ -1,6 +1,6 @@
-import type { Candle } from "@/entities/market/model/types";
+﻿import type { Candle } from "@/entities/market";
 import type { MarketProvider, ProviderParams } from "./base";
-import { readError } from "@/shared/lib/status-handler/read-error";
+import { readError } from "@/shared/lib";
 
 async function symbolToId(symbol: string): Promise<string | null> {
   const res = await fetch(
@@ -46,3 +46,4 @@ export const CoinGeckoProvider: MarketProvider = {
     return prices.map(([t, close]) => ({ t, close }));
   },
 };
+

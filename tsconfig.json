@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-  ],
+, "tailwing.config.js", "tailwing.config.js", "tailwing.config.js"  ],
   "exclude": ["node_modules"]
 }

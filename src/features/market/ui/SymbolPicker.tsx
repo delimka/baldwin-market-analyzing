@@ -1,14 +1,14 @@
 "use client";
 
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 import { Check, ChevronsUpDown } from "lucide-react";
-import type { MarketType } from "@/entities/market/model/types";
-import { cn } from "@/shared/lib/utils";
-import { useDebounce } from "@/shared/hooks/useDebounce";
+import type { MarketType } from "@/entities/market";
+import { cn } from "@/shared/lib";
+import { useDebounce } from "@/shared/hooks";
 import { useQuery } from "@tanstack/react-query";
-import { searchSymbols } from "@/shared/api/search";
-
-import { Button } from "@/shared/ui/shadcn/button";
+import { searchSymbols } from "@/entities/market";
+import { Button } from "@/shared/ui";
 import {
   Command,
   CommandEmpty,
@@ -16,12 +16,12 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/shared/ui/shadcn/command";
+} from "@/shared/ui";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/shared/ui/shadcn/popover";
+} from "@/shared/ui";
 
 type Props = {
   type: MarketType;
@@ -34,6 +34,7 @@ export function SymbolPicker(props: Props) {
 }
 
 function SymbolPickerInner({ type, value, onApply }: Props) {
+  const { t } = useTranslation();
   const [open, setOpen] = React.useState(false);
   const [draft, setDraft] = React.useState(value);
 
@@ -61,15 +62,17 @@ function SymbolPickerInner({ type, value, onApply }: Props) {
   };
 
   const placeholder =
-    type === "crypto" ? "btc / eth / sol" : "aapl.us / tsla.us";
+    type === "crypto"
+      ? t("symbolPicker.cryptoPlaceholder")
+      : t("symbolPicker.stockPlaceholder");
 
   const helperText = React.useMemo(() => {
     if (type !== "crypto") return null;
-    if (q.length < 2) return "Type at least 2 characters";
-    if (searchQ.isFetching) return "Searching…";
-    if (enabled && !items.length) return "No matches";
+    if (q.length < 2) return t("symbolPicker.typeAtLeast");
+    if (searchQ.isFetching) return t("symbolPicker.searching");
+    if (enabled && !items.length) return t("symbolPicker.noMatches");
     return null;
-  }, [type, q.length, enabled, searchQ.isFetching, items.length]);
+  }, [type, q.length, searchQ.isFetching, enabled, items.length, t]);
 
   const hasExact = !!q && items.some((it) => it.symbol.toLowerCase() === q);
 
@@ -89,7 +92,7 @@ function SymbolPickerInner({ type, value, onApply }: Props) {
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="w-64 p-0 bg-white" align="start">
+      <PopoverContent className="w-64 bg-white p-0" align="start">
         <Command
           shouldFilter={false}
           onKeyDown={(e) => {
@@ -114,7 +117,7 @@ function SymbolPickerInner({ type, value, onApply }: Props) {
                   value={`__apply__${draft.trim()}`}
                   onSelect={() => apply()}
                 >
-                  Use &quot;{draft.trim()}&quot;
+                  {t("symbolPicker.useValue")} &quot;{draft.trim()}&quot;
                 </CommandItem>
               </CommandGroup>
             ) : null}
@@ -132,7 +135,7 @@ function SymbolPickerInner({ type, value, onApply }: Props) {
                         <div className="truncate">
                           <span className="font-medium">{it.symbol}</span>
                           {it.name ? (
-                            <span className="opacity-70"> — {it.name}</span>
+                            <span className="opacity-70"> - {it.name}</span>
                           ) : null}
                         </div>
                       </div>
@@ -150,7 +153,7 @@ function SymbolPickerInner({ type, value, onApply }: Props) {
               </CommandGroup>
             ) : (
               <CommandEmpty>
-                {type === "crypto" && enabled ? "No matches" : " "}
+                {type === "crypto" && enabled ? t("symbolPicker.noMatches") : " "}
               </CommandEmpty>
             )}
           </CommandList>

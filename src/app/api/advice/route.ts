@@ -1,13 +1,14 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import { z, ZodError } from "zod";
 import { zodTextFormat } from "openai/helpers/zod";
 
 import { openai } from "@/entities/market/api/providers/openai";
-import { AdviceSchema } from "@/entities/advice/model/adviceSchema";
-import { computeIndicators } from "@/entities/market/lib/indicators";
+import { AdviceSchema } from "@/entities/advice";
+import { computeIndicators } from "@/entities/market";
 import { pickProvider } from "@/entities/market/api/providers";
+import { ADVICE_LANGUAGE_LABELS } from "@/shared/i18n/languages";
 
-import { Candle } from "@/entities/market/model/types";
+import { Candle } from "@/entities/market";
 
 const BodySchema = z.object({
   type: z.enum(["stock", "crypto"]),
@@ -15,7 +16,7 @@ const BodySchema = z.object({
   currency: z.string().default("usd"),
   days: z.number().min(7).max(365).default(60),
   timeframe: z.enum(["1D", "1H"]).default("1D"),
-  lang: z.string().default("eng"),
+  lang: z.enum(["en", "ru", "et"]).default("en"),
 });
 
 export async function POST(req: Request) {
@@ -49,10 +50,10 @@ export async function POST(req: Request) {
     };
 
     const system = `
-        You are a market analyst. Provide "signal" and financial advice. In ${body.lang} language.
-            If data is insufficient or noisy, prefer WATCH/HOLD.
-            Output strictly in the given JSON schema.
-            `;
+        You are a market analyst. Provide "signal" and financial advice. In ${ADVICE_LANGUAGE_LABELS[body.lang]} language.
+        If data is insufficient or noisy, prefer WATCH/HOLD.
+        Output strictly in the given JSON schema.
+      `;
     console.log("system promtyste", system);
 
     const user = `
@@ -86,3 +87,4 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Unknown error" }, { status: 500 });
   }
 }
+

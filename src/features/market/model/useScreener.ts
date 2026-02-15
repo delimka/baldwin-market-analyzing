@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { ScreenerRequest } from "@/entities/market/model/types";
-import { fetchScreener } from "@/shared/api/screener";
+import { ScreenerRequest } from "@/entities/market";
+import { fetchScreener } from "@/entities/market";
 
 export function useScreener(params: ScreenerRequest | null) {
   return useQuery({
@@ -13,3 +13,4 @@ export function useScreener(params: ScreenerRequest | null) {
     refetchInterval: false,
   });
 }
+

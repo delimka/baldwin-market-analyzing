@@ -1,10 +1,14 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { Badge } from "@/shared/ui/shadcn/badge";
-import { Separator } from "@/shared/ui/shadcn/separator";
-import { GridBackground } from "@/shared/components/GridBackground";
+import { Separator } from "@/shared/ui";
+import { GridBackground } from "@/shared/components";
+import { useTranslation } from "react-i18next";
 
 export function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer
       className="relative overflow-hidden border-t bg-[radial-gradient(1200px_circle_at_20%_0%,hsl(var(--muted))_0%,transparent_60%)]"
@@ -33,50 +37,48 @@ export function Footer() {
                 height={32}
                 className="h-15 w-auto"
               />
-              {/* <Badge variant="secondary">Market</Badge> */}
             </div>
             <p className="max-w-md text-sm text-muted-foreground">
-              Built for fast signal checks, clean charts, and practical market
-              workflows.
+              {t("footer.description")}
             </p>
           </div>
 
           <div className="grid gap-6 text-sm sm:grid-cols-2">
             <div className="space-y-2">
               <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
-                Product
+                {t("footer.product")}
               </div>
               <div className="grid gap-2">
                 <Link
                   className="text-muted-foreground hover:text-foreground"
                   href="/market-tracker"
                 >
-                  Market tracker
+                  {t("footer.marketTracker")}
                 </Link>
                 <Link
                   className="text-muted-foreground hover:text-foreground"
                   href="/market-screener"
                 >
-                  Market screener
+                  {t("footer.marketScreener")}
                 </Link>
               </div>
             </div>
             <div className="space-y-2">
               <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
-                Company
+                {t("footer.company")}
               </div>
               <div className="grid gap-2">
                 <Link
                   className="text-muted-foreground hover:text-foreground"
                   href="/"
                 >
-                  Home
+                  {t("footer.home")}
                 </Link>
                 <Link
                   className="text-muted-foreground hover:text-foreground"
                   href="#insights"
                 >
-                  Insights
+                  {t("footer.insights")}
                 </Link>
               </div>
             </div>

@@ -1,5 +1,5 @@
-import { fetchJson } from "./http";
-import type { CandlesResponse, MarketType } from "@/entities/market/model/types";
+﻿import { fetchJson } from "@/shared/api";
+import type { CandlesResponse, MarketType } from "../model/types";
 
 export type TF = "1D" | "1H" | "1W" | "1M";
 
@@ -20,3 +20,6 @@ export function getCandles(params: {
 
   return fetchJson<CandlesResponse>(`/api/candles?${qs.toString()}`);
 }
+
+
+

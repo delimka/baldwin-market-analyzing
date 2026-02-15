@@ -1,7 +1,8 @@
-import { fetchJson } from "./http";
-import type { Advice } from "@/entities/advice/model/adviceSchema";
-import type { MarketType } from "@/entities/market/model/types";
-import type { TF } from "./market";
+import { fetchJson } from "@/shared/api";
+import type { Advice } from "../model/adviceSchema";
+import type { MarketType } from "@/entities/market";
+import type { TF } from "@/entities/market";
+import type { SupportedLanguage } from "@/shared/i18n/languages";
 
 export type AdviceRequest = {
   type: MarketType;
@@ -9,7 +10,7 @@ export type AdviceRequest = {
   currency?: string;
   days?: number;
   timeframe: TF;
-  lang: string;
+  lang: SupportedLanguage;
 };
 
 export function getAdvice(payload: AdviceRequest) {
@@ -20,7 +21,7 @@ export function getAdvice(payload: AdviceRequest) {
       ...payload,
       currency: payload.currency ?? "usd",
       days: payload.days ?? 60,
-      lang: payload.lang ?? "eng",
+      lang: payload.lang ?? "en",
     }),
   });
 }

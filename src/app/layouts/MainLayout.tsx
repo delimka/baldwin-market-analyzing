@@ -1,5 +1,5 @@
-import { Footer } from "@/shared/components/Footer";
-import { NavBar } from "@/shared/components/NavBar";
+﻿import { Footer } from "@/shared/components";
+import { NavBar } from "@/shared/components";
 
 export default function MainLayot({ children }: { children: React.ReactNode }) {
   return (
@@ -10,3 +10,4 @@ export default function MainLayot({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
+

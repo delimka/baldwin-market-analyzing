@@ -1,4 +1,4 @@
-import type { Candle, MarketType } from "@/entities/market/model/types";
+﻿import type { Candle, MarketType } from "@/entities/market";
 
 export type ProviderParams = {
   type: MarketType;
@@ -13,3 +13,4 @@ export interface MarketProvider {
   supports(p: ProviderParams): boolean;
   fetchCandles(p: ProviderParams): Promise<Candle[]>;
 }
+

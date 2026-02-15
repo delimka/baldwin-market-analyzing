@@ -1,28 +1,33 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { ChevronDown, Globe } from "lucide-react";
-import { Button } from "@/shared/ui/shadcn/button";
+import { useTranslation } from "react-i18next";
+import { Button } from "@/shared/ui";
+import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/shared/ui/shadcn/popover";
+  DEFAULT_LANGUAGE,
+  isSupportedLanguage,
+  LANGUAGE_LABELS,
+  LANGUAGE_STORAGE_KEY,
+  type SupportedLanguage,
+} from "@/shared/i18n";
 
 type LanguageOption = {
-  code: string;
+  code: SupportedLanguage;
   label: string;
 };
 
-const defaultLanguages: LanguageOption[] = [
-  { code: "en", label: "EN" },
-  { code: "ru", label: "RU" },
-  { code: "et", label: "EST" },
-];
+const defaultLanguages: LanguageOption[] = (Object.keys(
+  LANGUAGE_LABELS,
+) as SupportedLanguage[]).map((code) => ({
+  code,
+  label: LANGUAGE_LABELS[code],
+}));
 
 type LanguageSwitcherProps = {
-  value?: string;
-  onChange?: (value: string) => void;
+  value?: SupportedLanguage;
+  onChange?: (value: SupportedLanguage) => void;
   options?: LanguageOption[];
 };
 
@@ -31,14 +36,15 @@ export function LanguageSwitcher({
   onChange,
   options = defaultLanguages,
 }: LanguageSwitcherProps) {
+  const { i18n } = useTranslation();
   const [open, setOpen] = useState(false);
-  const [current, setCurrent] = useState(options[0]);
 
-  useEffect(() => {
-    if (!value) return;
-    const match = options.find((language) => language.code === value);
-    if (match) setCurrent(match);
-  }, [options, value]);
+  const selectedCode = useMemo(() => {
+    const source = value ?? i18n.resolvedLanguage ?? DEFAULT_LANGUAGE;
+    return isSupportedLanguage(source) ? source : DEFAULT_LANGUAGE;
+  }, [i18n.resolvedLanguage, value]);
+
+  const current = options.find((language) => language.code === selectedCode) ?? options[0];
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -54,7 +60,7 @@ export function LanguageSwitcher({
       </PopoverTrigger>
       <PopoverContent
         align="end"
-        className="w-28 border border-border/70 bg-card p-2 text-[hsl(var(--foreground))] shadow-lg"
+        className="w-28 border border-border/70 bg-[hsl(var(--background))] p-2 text-[hsl(var(--foreground))] shadow-lg"
       >
         <div className="grid gap-1">
           {options.map((language) => (
@@ -62,13 +68,16 @@ export function LanguageSwitcher({
               key={language.code}
               type="button"
               onClick={() => {
-                setCurrent(language);
                 setOpen(false);
+                void i18n.changeLanguage(language.code);
+                if (typeof window !== "undefined") {
+                  window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language.code);
+                }
                 onChange?.(language.code);
               }}
               className={[
                 "rounded-md px-2 py-1 text-left text-xs font-medium transition",
-                current.code === language.code
+                selectedCode === language.code
                   ? "bg-[hsl(var(--accent))] text-[hsl(var(--accent-foreground))]"
                   : "hover:bg-[hsl(var(--accent))] hover:text-[hsl(var(--accent-foreground))]",
               ].join(" ")}

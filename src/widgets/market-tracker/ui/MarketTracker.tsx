@@ -8,7 +8,11 @@ import { Button } from "@/shared/ui";
 import { Separator } from "@/shared/ui";
 import type { MarketType } from "@/entities/market";
 import type { TF } from "@/entities/market";
-import { DEFAULT_LANGUAGE, isSupportedLanguage, type SupportedLanguage } from "@/shared/i18n";
+import {
+  DEFAULT_LANGUAGE,
+  isSupportedLanguage,
+  type SupportedLanguage,
+} from "@/shared/i18n";
 import { MarketControls } from "@/features/market";
 import { SymbolPicker } from "@/features/market";
 import { PriceChart } from "@/entities/market";
@@ -54,6 +58,7 @@ export function MarketTracker() {
             <SymbolPicker type={type} value={symbol} onApply={setSymbol} />
 
             <Button
+              className="btn-primary cursor-pointer"
               onClick={() =>
                 adviceM.mutate({
                   type,

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -26,7 +26,7 @@ export function Footer() {
           strokeOpacity={0.18}
         />
       </div>
-      <div className="mx-auto max-w-6xl px-4 py-12">
+      <div className="mx-auto max-w-7xl px-4 py-12">
         <div className="grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-start">
           <div className="space-y-4">
             <div className="flex flex-wrap items-center gap-3">

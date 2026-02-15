@@ -90,9 +90,7 @@ export function AdviceCard(props: {
                 </span>
               </div>
             ) : (
-              <div className="mt-1 text-xs opacity-70">
-                {t("advice.educationalSignal")}
-              </div>
+              ""
             )}
           </div>
 
@@ -205,7 +203,9 @@ export function AdviceCard(props: {
 
               <div className="rounded-xl border bg-background p-3">
                 <div className="flex items-center justify-between">
-                  <div className="font-medium text-red-700">{t("advice.bearish")}</div>
+                  <div className="font-medium text-red-700">
+                    {t("advice.bearish")}
+                  </div>
                   <Badge variant="secondary" className="text-xs">
                     {data.rationale.bearish.length}
                   </Badge>
@@ -223,7 +223,9 @@ export function AdviceCard(props: {
 
               <div className="rounded-xl border bg-background p-3">
                 <div className="flex items-center justify-between">
-                  <div className="font-medium text-yellow-700">{t("advice.risks")}</div>
+                  <div className="font-medium text-yellow-700">
+                    {t("advice.risks")}
+                  </div>
                   <Badge variant="secondary" className="text-xs">
                     {data.rationale.risks.length}
                   </Badge>
@@ -280,7 +282,9 @@ export function AdviceCard(props: {
               </div>
             ) : (
               <div className="opacity-70">
-                {error ? t("advice.fixAndRetry") : t("advice.useRiskManagement")}
+                {error
+                  ? t("advice.fixAndRetry")
+                  : t("advice.useRiskManagement")}
               </div>
             )}
           </div>

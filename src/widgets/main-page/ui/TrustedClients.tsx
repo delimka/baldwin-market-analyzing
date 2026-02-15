@@ -66,8 +66,8 @@ export function CryptoCoverage() {
                   <Image
                     src={coin.large || coin.thumb}
                     alt={coin.name}
-                    width={40}
-                    height={40}
+                    width={65}
+                    height={65}
                     unoptimized
                     className="rounded-full"
                   />

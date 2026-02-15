@@ -84,7 +84,7 @@ export function NavBar() {
         hidden ? "-translate-y-full" : "translate-y-0",
       ].join(" ")}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between = gap-6 px-4">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between = gap-6 px-4">
         <Link href="/" className="flex items-center gap-3">
           <Image
             src="/logo.webp"
@@ -183,7 +183,7 @@ export function NavBar() {
         ].join(" ")}
         aria-hidden={!open}
       >
-        <div className="mx-auto grid max-w-6xl gap-4 px-4 py-6 text-sm">
+        <div className="mx-auto grid max-w-7xl gap-4 px-4 py-6 text-sm">
           <div className="grid gap-2">
             <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
               {t("nav.product")}
@@ -254,4 +254,3 @@ function ListItem({
     </li>
   );
 }
-

@@ -92,7 +92,7 @@ function SymbolPickerInner({ type, value, onApply }: Props) {
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="w-64 bg-white p-0" align="start">
+      <PopoverContent className="w-64 p-0" align="start">
         <Command
           shouldFilter={false}
           onKeyDown={(e) => {

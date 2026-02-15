@@ -31,7 +31,7 @@ export function MarketControls(props: {
         <SelectTrigger className="w-36">
           <SelectValue placeholder={t("marketControls.type")} />
         </SelectTrigger>
-        <SelectContent className="bg-white">
+        <SelectContent>
           <SelectItem value="crypto">{t("marketControls.crypto")}</SelectItem>
           <SelectItem value="stock">{t("marketControls.stock")}</SelectItem>
         </SelectContent>
@@ -44,7 +44,7 @@ export function MarketControls(props: {
         <SelectTrigger className="w-28">
           <SelectValue placeholder={t("marketControls.timeframe")} />
         </SelectTrigger>
-        <SelectContent className="w-28 bg-white">
+        <SelectContent className="w-28">
           <SelectItem value="1D">1D</SelectItem>
           <SelectItem value="1H">1H</SelectItem>
         </SelectContent>

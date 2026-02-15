@@ -1,9 +1,14 @@
-﻿import Link from "next/link";
+"use client";
+
+import Link from "next/link";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/shared/ui";
 import { Card } from "@/shared/ui";
 import { HeroBackground } from "@/shared/components";
 
 export function Hero() {
+  const { t } = useTranslation();
+
   return (
     <section className="relative isolate overflow-hidden rounded-2xl bg-card">
       <HeroBackground />
@@ -16,42 +21,53 @@ export function Hero() {
               '"Fraunces","Iowan Old Style","Palatino Linotype",serif',
           }}
         >
-          Signal-first market intelligence for crypto and stocks
+          {t("hero.title")}
         </h1>
         <p className="mt-4 max-w-2xl text-sm text-muted-foreground sm:text-base">
-          Track candles, scan movers, and request AI-backed insights with clear
-          rationale. Built for fast checks and calm decision-making.
+          {t("hero.subtitle")}
         </p>
 
         <div className="mt-6 flex flex-wrap gap-3">
           <Button className="btn-primary shadow-sm" asChild>
-            <Link href="/market-tracker">Start tracking</Link>
+            <Link href="/market-tracker">{t("hero.startTracking")}</Link>
           </Button>
           <Button className="btn-secondary shadow-sm" asChild>
-            <Link href="/market-screener">Run screener</Link>
+            <Link href="/market-screener">{t("hero.runScreener")}</Link>
           </Button>
         </div>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-3">
-          <Card className="border border-border/70  p-4 shadow-sm backdrop-blur-[3px]">
-            <div className="text-xs text-muted-foreground">Timeframes</div>
-            <div className="mt-1 text-lg font-semibold">1H and 1D</div>
+          <Card className="border border-border/70 p-4 shadow-sm backdrop-blur-[3px]">
+            <div className="text-xs text-muted-foreground">
+              {t("hero.cards.timeframes")}
+            </div>
+            <div className="mt-1 text-lg font-semibold">
+              {t("hero.cards.timeframesValue")}
+            </div>
             <div className="mt-1 text-sm text-muted-foreground">
-              Toggle between intraday and daily views quickly.
+              {t("hero.cards.timeframesDesc")}
             </div>
           </Card>
-          <Card className="border border-border/70  p-4 shadow-sm backdrop-blur-[3px]">
-            <div className="text-xs text-muted-foreground">Signals</div>
-            <div className="mt-1 text-lg font-semibold">Actionable</div>
+          <Card className="border border-border/70 p-4 shadow-sm backdrop-blur-[3px]">
+            <div className="text-xs text-muted-foreground">
+              {t("hero.cards.signals")}
+            </div>
+            <div className="mt-1 text-lg font-semibold">
+              {t("hero.cards.signalsValue")}
+            </div>
             <div className="mt-1 text-sm text-muted-foreground">
-              BUY, SELL, HOLD, WATCH with confidence and rationale.
+              {t("hero.cards.signalsDesc")}
             </div>
           </Card>
-          <Card className="border border-border/70  p-4 shadow-sm backdrop-blur-[3px]">
-            <div className="text-xs text-muted-foreground">Sources</div>
-            <div className="mt-1 text-lg font-semibold">Multi-provider</div>
+          <Card className="border border-border/70 p-4 shadow-sm backdrop-blur-[3px]">
+            <div className="text-xs text-muted-foreground">
+              {t("hero.cards.sources")}
+            </div>
+            <div className="mt-1 text-lg font-semibold">
+              {t("hero.cards.sourcesValue")}
+            </div>
             <div className="mt-1 text-sm text-muted-foreground">
-              Binance, CoinGecko, and Stooq coverage.
+              {t("hero.cards.sourcesDesc")}
             </div>
           </Card>
         </div>
@@ -59,6 +75,3 @@ export function Hero() {
     </section>
   );
 }
-
-
-

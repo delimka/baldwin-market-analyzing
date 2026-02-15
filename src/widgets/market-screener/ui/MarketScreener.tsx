@@ -1,12 +1,8 @@
-﻿"use client";
+"use client";
 
 import { useMemo, useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/shared/ui";
+import { useTranslation } from "react-i18next";
+import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui";
 import { Button } from "@/shared/ui";
 import { ScreenerControls } from "@/features/market";
 import { ScreenerTable } from "@/features/market";
@@ -14,6 +10,7 @@ import { useScreener } from "@/features/market";
 import type { ScreenerRequest } from "@/entities/market";
 
 export function MarketScreener() {
+  const { t } = useTranslation();
   const [controls, setControls] = useState<
     Pick<ScreenerRequest, "top" | "timeframe" | "withNews">
   >({
@@ -36,7 +33,7 @@ export function MarketScreener() {
       liquidityPool: 200,
       withNews: submitted.withNews,
       runId,
-    } as any;
+    };
   }, [submitted, runId]);
 
   const q = useScreener(params);
@@ -50,18 +47,18 @@ export function MarketScreener() {
   return (
     <Card>
       <CardHeader className="space-y-3">
-        <CardTitle>Screener (run on submit)</CardTitle>
+        <CardTitle>{t("marketScreener.title")}</CardTitle>
 
         <form onSubmit={onSubmit} className="flex flex-wrap items-center gap-2">
           <ScreenerControls value={controls} onChange={setControls} />
           <Button type="submit" disabled={q.isFetching}>
-            {q.isFetching ? "Scanning..." : "Run scan"}
+            {q.isFetching ? t("marketScreener.scanning") : t("marketScreener.runScan")}
           </Button>
         </form>
 
         <div className="text-xs opacity-60">
           {q.data?.asOf
-            ? `asOf: ${new Date(q.data.asOf).toLocaleString()}`
+            ? `${t("marketScreener.asOf")}: ${new Date(q.data.asOf).toLocaleString()}`
             : "-"}
         </div>
       </CardHeader>
@@ -69,7 +66,7 @@ export function MarketScreener() {
       <CardContent className="space-y-3">
         {q.error ? (
           <div className="rounded-md border p-3">
-            Error: {(q.error as any)?.message ?? "unknown"}
+            {t("common.error")}: {(q.error as Error)?.message ?? t("marketScreener.unknown")}
           </div>
         ) : null}
 
@@ -78,4 +75,3 @@ export function MarketScreener() {
     </Card>
   );
 }
-

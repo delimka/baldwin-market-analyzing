@@ -1,5 +1,6 @@
-﻿"use client";
+"use client";
 
+import { useTranslation } from "react-i18next";
 import { Button } from "@/shared/ui";
 import {
   Select,
@@ -20,6 +21,7 @@ export function ScreenerControls(props: {
     next: Pick<ScreenerRequest, "top" | "timeframe" | "withNews">
   ) => void;
 }) {
+  const { t } = useTranslation();
   const { value, onChange } = props;
 
   const setTop = (top: ScreenerTop) => onChange({ ...value, top });
@@ -56,7 +58,7 @@ export function ScreenerControls(props: {
           onValueChange={(v) => setTimeframe(v as ScreenerTimeframe)}
         >
           <SelectTrigger>
-            <SelectValue placeholder="Timeframe" />
+            <SelectValue placeholder={t("screenerControls.timeframe")} />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="1H">1H</SelectItem>
@@ -69,9 +71,9 @@ export function ScreenerControls(props: {
         variant={value.withNews ? "default" : "outline"}
         onClick={toggleNews}
       >
-        News: {value.withNews ? "ON" : "OFF"}
+        {t("screenerControls.news")}:{" "}
+        {value.withNews ? t("screenerControls.on") : t("screenerControls.off")}
       </Button>
     </div>
   );
 }
-

@@ -1,4 +1,7 @@
-﻿import Link from "next/link";
+"use client";
+
+import Link from "next/link";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/shared/ui";
 import { Input } from "@/shared/ui";
 import { cn } from "@/shared/lib";
@@ -6,43 +9,45 @@ import { cn } from "@/shared/lib";
 type LoginFormProps = React.ComponentProps<"form">;
 
 export function LoginForm({ className, ...props }: LoginFormProps) {
+  const { t } = useTranslation();
+
   return (
     <form className={cn("flex flex-col gap-6", className)} {...props}>
       <div className="flex flex-col items-center gap-1 text-center">
-        <h1 className="text-2xl font-bold">Log in to your account</h1>
+        <h1 className="text-2xl font-bold">{t("login.form.title")}</h1>
         <p className="text-muted-foreground text-sm text-balance">
-          Enter your email below to log in to your account.
+          {t("login.form.subtitle")}
         </p>
       </div>
 
       <div className="grid gap-4">
         <div className="grid gap-2">
           <label className="text-sm font-medium" htmlFor="email">
-            Email
+            {t("login.form.email")}
           </label>
           <Input id="email" type="email" placeholder="m@example.com" required />
         </div>
         <div className="grid gap-2">
           <div className="flex items-center">
             <label className="text-sm font-medium" htmlFor="password">
-              Password
+              {t("login.form.password")}
             </label>
             <Link
               href="/"
               className="ml-auto text-sm text-muted-foreground underline-offset-4 hover:underline"
             >
-              Forgot your password?
+              {t("login.form.forgotPassword")}
             </Link>
           </div>
           <Input id="password" type="password" required />
         </div>
         <Button type="submit" className="btn-primary">
-          Log in
+          {t("login.form.logIn")}
         </Button>
       </div>
 
       <div className="relative text-center text-sm text-muted-foreground">
-        <span className="bg-background px-2">Or continue with</span>
+        <span className="bg-background px-2">{t("login.form.orContinue")}</span>
         <div className="absolute inset-x-0 top-1/2 -z-10 h-px bg-border" />
       </div>
 
@@ -58,16 +63,15 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
             fill="currentColor"
           />
         </svg>
-        Log in with GitHub
+        {t("login.form.logInGithub")}
       </Button>
 
       <p className="text-center text-sm text-muted-foreground">
-        Don&apos;t have an account?{" "}
+        {t("login.form.noAccount")}
         <Link href="/" className="underline underline-offset-4">
-          Sign up
+          {t("login.form.signUp")}
         </Link>
       </p>
     </form>
   );
 }
-

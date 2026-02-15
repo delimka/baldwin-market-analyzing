@@ -2,6 +2,7 @@
 
 import Marquee from "react-fast-marquee";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 import { useCryptoLogos } from "../model";
 
 function FallbackLogos() {
@@ -33,6 +34,7 @@ function FallbackLogos() {
 }
 
 export function CryptoCoverage() {
+  const { t } = useTranslation();
   const logosQ = useCryptoLogos(20);
   const items = logosQ.data?.items ?? [];
 
@@ -40,10 +42,10 @@ export function CryptoCoverage() {
     <section className="py-6">
       <div className="text-center">
         <h3 className="text-xs font-medium uppercase tracking-[0.3em] text-muted-foreground">
-          Market Coverage
+          {t("coverage.title")}
         </h3>
         <p className="mt-2 text-sm text-muted-foreground">
-          Track the most watched crypto assets with live.
+          {t("coverage.subtitle")}
         </p>
       </div>
 

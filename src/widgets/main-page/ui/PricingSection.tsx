@@ -1,20 +1,25 @@
-﻿import { SectionTitle } from "@/shared/components";
-import { pricingData } from "../model";
+"use client";
+
 import { SparklesIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { SectionTitle } from "@/shared/components";
+import { pricingData } from "../model";
 
 export function PricingSection() {
+  const { t } = useTranslation();
+
   return (
     <section className="py-6">
       <SectionTitle
-        text1="Pricing"
-        text2="Clear plans for serious market work"
-        text3="Choose a plan that fits your workflow, from quick checks to full-stack research."
+        text1={t("pricing.overline")}
+        text2={t("pricing.title")}
+        text3={t("pricing.subtitle")}
       />
 
       <div className="mt-10 grid gap-6 lg:grid-cols-3">
         {pricingData.map((plan) => (
           <div
-            key={plan.title}
+            key={plan.titleKey}
             className={[
               "relative flex h-full flex-col rounded-2xl border p-6 shadow-[0px_8px_30px] shadow-black/5",
               plan.mostPopular
@@ -25,11 +30,11 @@ export function PricingSection() {
             {plan.mostPopular && (
               <div className="absolute right-4 top-4 flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-slate-900">
                 <SparklesIcon size={14} />
-                Most popular
+                {t("pricing.mostPopular")}
               </div>
             )}
 
-            <p className="text-sm font-medium">{plan.title}</p>
+            <p className="text-sm font-medium">{t(plan.titleKey)}</p>
             <h4 className="mt-2 text-3xl font-semibold">
               ${plan.price}
               <span
@@ -40,7 +45,7 @@ export function PricingSection() {
                     : "text-muted-foreground",
                 ].join(" ")}
               >
-                /mo
+                {t("pricing.perMonth")}
               </span>
             </h4>
 
@@ -53,14 +58,14 @@ export function PricingSection() {
 
             <div
               className={[
-                "space-y-2 text-sm mb-8",
+                "mb-8 space-y-2 text-sm",
                 plan.mostPopular
                   ? "text-primary-foreground/90"
                   : "text-muted-foreground",
               ].join(" ")}
             >
               {plan.features.map((feature) => (
-                <div key={feature.name} className="flex items-center gap-2">
+                <div key={feature.nameKey} className="flex items-center gap-2">
                   <feature.icon
                     size={18}
                     className={
@@ -69,7 +74,7 @@ export function PricingSection() {
                         : "text-primary"
                     }
                   />
-                  <span>{feature.name}</span>
+                  <span>{t(feature.nameKey)}</span>
                 </div>
               ))}
             </div>
@@ -80,7 +85,7 @@ export function PricingSection() {
                 plan.mostPopular ? "bg-white text-slate-900" : "btn-primary",
               ].join(" ")}
             >
-              {plan.buttonText}
+              {t(plan.buttonTextKey)}
             </button>
           </div>
         ))}
@@ -88,7 +93,3 @@ export function PricingSection() {
     </section>
   );
 }
-
-
-
-

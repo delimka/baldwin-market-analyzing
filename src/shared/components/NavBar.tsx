@@ -5,9 +5,9 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import type { ComponentPropsWithoutRef } from "react";
 import { Menu, X } from "lucide-react";
-import { useIsMobile } from "@/shared/hooks";
 import { Button } from "@/shared/ui";
 import { LanguageSwitcher } from "@/shared/components";
+import { useTranslation } from "react-i18next";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -18,35 +18,33 @@ import {
   navigationMenuTriggerStyle,
 } from "@/shared/ui";
 
-const productLinks = [
-  {
-    title: "Market Tracker",
-    href: "/market-tracker",
-    description: "Candles, signals, and AI-assisted analysis.",
-  },
-  {
-    title: "Market Screener",
-    href: "/market-screener",
-    description: "Scan movers and filter for momentum.",
-  },
-  {
-    title: "Advice Engine",
-    href: "/market-tracker",
-    description: "Request trade guidance with rationale.",
-  },
-];
-
-const companyLinks = [
-  { title: "Features", href: "#features" },
-  { title: "Insights", href: "#insights" },
-  { title: "About", href: "#about" },
-];
-
 export function NavBar() {
-  const isMobile = useIsMobile();
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const lastScrollY = useRef(0);
+  const productLinks = [
+    {
+      title: t("nav.productLinks.marketTracker.title"),
+      href: "/market-tracker",
+      description: t("nav.productLinks.marketTracker.description"),
+    },
+    {
+      title: t("nav.productLinks.marketScreener.title"),
+      href: "/market-screener",
+      description: t("nav.productLinks.marketScreener.description"),
+    },
+    {
+      title: t("nav.productLinks.adviceEngine.title"),
+      href: "/market-tracker",
+      description: t("nav.productLinks.adviceEngine.description"),
+    },
+  ];
+  const companyLinks = [
+    { title: t("nav.companyLinks.features"), href: "#features" },
+    { title: t("nav.companyLinks.insights"), href: "#insights" },
+    { title: t("nav.companyLinks.about"), href: "#about" },
+  ];
 
   useEffect(() => {
     let ticking = false;
@@ -104,7 +102,7 @@ export function NavBar() {
         <NavigationMenu viewport={false} className="hidden max-w-none md:flex ">
           <NavigationMenuList>
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Product</NavigationMenuTrigger>
+              <NavigationMenuTrigger>{t("nav.product")}</NavigationMenuTrigger>
               <NavigationMenuContent className="bg-[hsl(var(--background))] text-[hsl(var(--foreground))] shadow-lg">
                 <ul className="grid gap-2 p-2 md:w-90">
                   {productLinks.map((item) => (
@@ -120,7 +118,7 @@ export function NavBar() {
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Company</NavigationMenuTrigger>
+              <NavigationMenuTrigger>{t("nav.company")}</NavigationMenuTrigger>
               <NavigationMenuContent className="bg-[hsl(var(--background))] text-[hsl(var(--foreground))] shadow-lg">
                 <ul className="grid w-55 gap-2 p-2">
                   {companyLinks.map((item) => (
@@ -140,7 +138,7 @@ export function NavBar() {
                 asChild
                 className={navigationMenuTriggerStyle()}
               >
-                <Link href="/market-screener">Screener</Link>
+                <Link href="/market-screener">{t("nav.screener")}</Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>
@@ -153,10 +151,10 @@ export function NavBar() {
             className="border-border/60 bg-card/80 shadow-sm backdrop-blur hover:bg-card"
             asChild
           >
-            <Link href="/login">Log in</Link>
+            <Link href="/login">{t("nav.logIn")}</Link>
           </Button>
           <Button className="btn-primary shadow-sm" asChild>
-            <Link href="/market-tracker">Open tracker</Link>
+            <Link href="/market-tracker">{t("nav.openTracker")}</Link>
           </Button>
         </div>
 
@@ -164,7 +162,7 @@ export function NavBar() {
           <Button
             variant="ghost"
             size="icon"
-            aria-label="Toggle menu"
+            aria-label={t("nav.toggleMenu")}
             onClick={() => {
               setHidden(false);
               lastScrollY.current = window.scrollY;
@@ -188,7 +186,7 @@ export function NavBar() {
         <div className="mx-auto grid max-w-6xl gap-4 px-4 py-6 text-sm">
           <div className="grid gap-2">
             <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-              Product
+              {t("nav.product")}
             </div>
             {productLinks.map((item) => (
               <Link
@@ -207,7 +205,7 @@ export function NavBar() {
 
           <div className="grid gap-2">
             <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-              Company
+              {t("nav.company")}
             </div>
             {companyLinks.map((item) => (
               <Link
@@ -224,12 +222,12 @@ export function NavBar() {
           <div className="grid gap-2">
             <Button asChild>
               <Link href="/market-tracker" onClick={() => setOpen(false)}>
-                Open tracker
+                {t("nav.openTracker")}
               </Link>
             </Button>
             <Button variant="outline" asChild>
               <Link href="/market-screener" onClick={() => setOpen(false)}>
-                Try screener
+                {t("nav.tryScreener")}
               </Link>
             </Button>
           </div>

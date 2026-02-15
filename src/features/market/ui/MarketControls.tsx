@@ -1,7 +1,9 @@
-﻿"use client";
+"use client";
 
+import { useTranslation } from "react-i18next";
 import type { MarketType } from "@/entities/market";
 import type { TF } from "@/entities/market";
+import type { SupportedLanguage } from "@/shared/i18n";
 import { LanguageSwitcher } from "@/shared/components";
 import {
   Select,
@@ -14,11 +16,12 @@ import {
 export function MarketControls(props: {
   type: MarketType;
   timeframe: TF;
-  lang: string;
+  lang: SupportedLanguage;
   onTypeChange: (v: MarketType) => void;
   onTimeframeChange: (v: TF) => void;
-  onLangChange?: (v: string) => void;
 }) {
+  const { t } = useTranslation();
+
   return (
     <>
       <Select
@@ -26,11 +29,11 @@ export function MarketControls(props: {
         onValueChange={(v: string) => props.onTypeChange(v as MarketType)}
       >
         <SelectTrigger className="w-36">
-          <SelectValue placeholder="type" />
+          <SelectValue placeholder={t("marketControls.type")} />
         </SelectTrigger>
         <SelectContent className="bg-white">
-          <SelectItem value="crypto">Crypto</SelectItem>
-          <SelectItem value="stock">Stock</SelectItem>
+          <SelectItem value="crypto">{t("marketControls.crypto")}</SelectItem>
+          <SelectItem value="stock">{t("marketControls.stock")}</SelectItem>
         </SelectContent>
       </Select>
 
@@ -39,9 +42,9 @@ export function MarketControls(props: {
         onValueChange={(v: string) => props.onTimeframeChange(v as TF)}
       >
         <SelectTrigger className="w-28">
-          <SelectValue placeholder="TF" />
+          <SelectValue placeholder={t("marketControls.timeframe")} />
         </SelectTrigger>
-        <SelectContent className="bg-white w-28">
+        <SelectContent className="w-28 bg-white">
           <SelectItem value="1D">1D</SelectItem>
           <SelectItem value="1H">1H</SelectItem>
         </SelectContent>
@@ -49,14 +52,7 @@ export function MarketControls(props: {
 
       <LanguageSwitcher
         value={props.lang}
-        onChange={(value) => props.onLangChange?.(value)}
-        options={[
-          { code: "eng", label: "EN" },
-          { code: "rus", label: "RU" },
-          { code: "fin", label: "FIN" },
-        ]}
       />
     </>
   );
 }
-

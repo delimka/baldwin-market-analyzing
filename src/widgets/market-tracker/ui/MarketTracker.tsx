@@ -37,77 +37,75 @@ export function MarketTracker() {
     : DEFAULT_LANGUAGE;
 
   return (
-    <div>
-      <Card className="rounded-2xl">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            {t("marketTracker.title")} <Badge variant="secondary">MVP+</Badge>
-          </CardTitle>
-        </CardHeader>
+    <>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          {t("marketTracker.title")} <Badge variant="secondary">MVP+</Badge>
+        </CardTitle>
+      </CardHeader>
 
-        <CardContent className="space-y-3">
-          <div className="flex flex-wrap items-center gap-2">
-            <MarketControls
-              type={type}
-              timeframe={timeframe}
-              onTypeChange={setType}
-              onTimeframeChange={setTimeframe}
-              lang={lang}
-            />
-
-            <SymbolPicker type={type} value={symbol} onApply={setSymbol} />
-
-            <Button
-              className="btn-primary cursor-pointer"
-              onClick={() =>
-                adviceM.mutate({
-                  type,
-                  symbol,
-                  timeframe,
-                  days: 60,
-                  currency: "usd",
-                  lang,
-                })
-              }
-              disabled={
-                candlesQ.isLoading || adviceM.isPending || candles.length < 50
-              }
-            >
-              {t("marketTracker.getSignal")}
-            </Button>
-          </div>
-
-          <div className="text-sm opacity-70">
-            {t("marketTracker.dataSource")}:{" "}
-            <span className="font-medium">{src ?? "-"}</span>
-          </div>
-
-          <Separator />
-
-          {candlesQ.isLoading ? (
-            <div className="flex min-h-56 items-center justify-center gap-3 rounded-xl border bg-background">
-              <Loader size={24} />
-              <span className="text-sm text-muted-foreground">
-                {t("marketTracker.loadingCandles")}
-              </span>
-            </div>
-          ) : candlesQ.isError ? (
-            <div className="text-red-600">
-              {t("common.error")}: {candlesQ.error.message}
-            </div>
-          ) : (
-            <PriceChart data={candles} />
-          )}
-
-          <Separator />
-
-          <AdviceCard
-            pending={adviceM.isPending}
-            data={adviceM.data ?? null}
-            error={adviceM.error?.message ?? null}
+      <CardContent className="space-y-3 px-0">
+        <div className="flex flex-wrap items-center gap-2">
+          <MarketControls
+            type={type}
+            timeframe={timeframe}
+            onTypeChange={setType}
+            onTimeframeChange={setTimeframe}
+            lang={lang}
           />
-        </CardContent>
-      </Card>
-    </div>
+
+          <SymbolPicker type={type} value={symbol} onApply={setSymbol} />
+
+          <Button
+            className="btn-primary cursor-pointer"
+            onClick={() =>
+              adviceM.mutate({
+                type,
+                symbol,
+                timeframe,
+                days: 60,
+                currency: "usd",
+                lang,
+              })
+            }
+            disabled={
+              candlesQ.isLoading || adviceM.isPending || candles.length < 50
+            }
+          >
+            {t("marketTracker.getSignal")}
+          </Button>
+        </div>
+
+        <div className="text-sm opacity-70">
+          {t("marketTracker.dataSource")}:{" "}
+          <span className="font-medium">{src ?? "-"}</span>
+        </div>
+
+        <Separator />
+
+        {candlesQ.isLoading ? (
+          <div className="flex min-h-56 items-center justify-center gap-3 rounded-xl border bg-background">
+            <Loader size={24} />
+            <span className="text-sm text-muted-foreground">
+              {t("marketTracker.loadingCandles")}
+            </span>
+          </div>
+        ) : candlesQ.isError ? (
+          <div className="text-red-600">
+            {t("common.error")}: {candlesQ.error.message}
+          </div>
+        ) : (
+          <PriceChart data={candles} />
+        )}
+
+        <Separator />
+
+        <AdviceCard
+          pending={adviceM.isPending}
+          data={adviceM.data ?? null}
+          error={adviceM.error?.message ?? null}
+        />
+      </CardContent>
+    </>
   );
 }

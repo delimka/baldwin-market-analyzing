@@ -2,12 +2,16 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import type { ComponentPropsWithoutRef } from "react";
 import { Menu, X } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
+import { signOut } from "next-auth/react";
 import { Button } from "@/shared/ui";
 import { LanguageSwitcher } from "@/shared/components";
 import { useTranslation } from "react-i18next";
+import { useCurrentUser, useLogout } from "@/features/auth";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -20,9 +24,28 @@ import {
 
 export function NavBar() {
   const { t } = useTranslation();
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const meQ = useCurrentUser();
+  const logoutM = useLogout();
   const lastScrollY = useRef(0);
+  const currentUser = meQ.data?.user ?? null;
+  const authSource = meQ.data?.source ?? null;
+
+  const handleLogout = async () => {
+    try {
+      if (authSource === "google") {
+        await signOut({ redirect: false });
+      } else {
+        await logoutM.mutateAsync();
+      }
+      await queryClient.invalidateQueries({ queryKey: ["auth", "me"] });
+      router.refresh();
+      router.push("/");
+    } catch {}
+  };
   const productLinks = [
     {
       title: t("nav.productLinks.marketTracker.title"),
@@ -146,13 +169,32 @@ export function NavBar() {
 
         <div className="hidden items-center gap-3 md:flex">
           <LanguageSwitcher />
-          <Button
-            variant="outline"
-            className="border-border/60 bg-card/80 shadow-sm backdrop-blur hover:bg-card"
-            asChild
-          >
-            <Link href="/login">{t("nav.logIn")}</Link>
-          </Button>
+          {currentUser ? (
+            <>
+              <div className="inline-flex items-center gap-2 rounded-md border border-border/60 bg-card/80 px-3 py-2 text-sm shadow-sm backdrop-blur">
+                <span className="inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                <span className="max-w-40 truncate">
+                  {currentUser.name || currentUser.email}
+                </span>
+              </div>
+              <Button
+                variant="outline"
+                className="border-border/60 bg-card/80 shadow-sm backdrop-blur hover:bg-card"
+                onClick={handleLogout}
+                disabled={logoutM.isPending}
+              >
+                {logoutM.isPending ? `${t("common.loading")}...` : t("nav.logout")}
+              </Button>
+            </>
+          ) : (
+            <Button
+              variant="outline"
+              className="border-border/60 bg-card/80 shadow-sm backdrop-blur hover:bg-card"
+              asChild
+            >
+              <Link href="/login">{t("nav.logIn")}</Link>
+            </Button>
+          )}
           <Button className="btn-primary shadow-sm" asChild>
             <Link href="/market-tracker">{t("nav.openTracker")}</Link>
           </Button>
@@ -220,6 +262,24 @@ export function NavBar() {
           </div>
 
           <div className="grid gap-2">
+            {currentUser ? (
+              <div className="rounded-md border bg-background px-3 py-2 text-sm">
+                <div className="flex items-center gap-2 font-medium">
+                  <span className="inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                  {t("nav.online")}
+                </div>
+                <div className="truncate text-xs text-muted-foreground">
+                  {currentUser.name || currentUser.email}
+                </div>
+              </div>
+            ) : (
+              <Button variant="outline" asChild>
+                <Link href="/login" onClick={() => setOpen(false)}>
+                  {t("nav.logIn")}
+                </Link>
+              </Button>
+            )}
+
             <Button asChild>
               <Link href="/market-tracker" onClick={() => setOpen(false)}>
                 {t("nav.openTracker")}
@@ -230,6 +290,18 @@ export function NavBar() {
                 {t("nav.tryScreener")}
               </Link>
             </Button>
+            {currentUser ? (
+              <Button
+                variant="outline"
+                onClick={async () => {
+                  await handleLogout();
+                  setOpen(false);
+                }}
+                disabled={logoutM.isPending}
+              >
+                {logoutM.isPending ? `${t("common.loading")}...` : t("nav.logout")}
+              </Button>
+            ) : null}
           </div>
         </div>
       </div>
